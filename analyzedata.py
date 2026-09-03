@@ -40,3 +40,11 @@ def fastestoverall(session):
     laps['LapTime'] = laps['LapTime'].dt.total_seconds()
     fastest = laps['LapTime'].min()
     return fastest
+
+
+
+
+def get_consistency(session, driver):
+    laps =clean_laps(session,driver)
+    result = laps.std()
+    return round(result, 3)

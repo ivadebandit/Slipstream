@@ -131,3 +131,10 @@ print({ver_fastest})
 
 overall = fastestoverall(session)
 print({overall})
+
+
+
+from analyzedata import get_consistency
+session = get_session(2022, 'Mexico', 'R')
+ver = get_consistency(session,'VER')
+print(ver)
