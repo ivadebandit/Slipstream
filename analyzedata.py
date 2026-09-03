@@ -13,3 +13,12 @@ def clean_laps(session, driver):
 
     driver_laps = driver_laps['LapTime'].dt.total_seconds()
     return driver_laps
+
+
+
+
+def raceresult(session):
+    results = session.results
+    sort = results.sort_values('Points', ascending=False)
+
+    return sort[['Abbreviation', 'TeamName', 'Position', 'Points', 'Status']]

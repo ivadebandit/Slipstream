@@ -100,7 +100,7 @@ print(laps['Compound'].unique())
 print(laps['LapTime'].head(5))
 print(laps['IsAccurate'].value.counts())
 """
-
+"""
 from getdata import get_session
 from analyzedata import clean_laps
 session = get_session(2026, 'Austria', 'R')
@@ -109,4 +109,13 @@ laps = clean_laps(session, 'VER')
 
 
 print(laps.head())
-print(len(laps))
+print(len(laps))"""
+
+
+
+from getdata import get_session
+from analyzedata import raceresult
+
+session=get_session(2026, 'Netherlands' , 'R')
+res = raceresult(session)
+print(res)
