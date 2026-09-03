@@ -114,8 +114,20 @@ print(len(laps))"""
 
 
 from getdata import get_session
+"""
 from analyzedata import raceresult
 
 session=get_session(2026, 'Netherlands' , 'R')
 res = raceresult(session)
-print(res)
+print(res)"""
+
+
+
+from analyzedata import fastest_lap, fastestoverall
+session = get_session(2026, 'Monaco', 'Q')
+ver_fastest = fastest_lap(session, 'VER')
+print({ver_fastest})
+
+
+overall = fastestoverall(session)
+print({overall})

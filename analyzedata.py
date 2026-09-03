@@ -22,3 +22,21 @@ def raceresult(session):
     sort = results.sort_values('Points', ascending=False)
 
     return sort[['Abbreviation', 'TeamName', 'Position', 'Points', 'Status']]
+
+
+
+
+
+def fastest_lap(session,driver): # for a specific driver
+
+    laps = clean_laps(session, driver)
+    fastest = laps.min()
+
+    return fastest
+
+
+def fastestoverall(session):
+    laps = session.laps
+    laps['LapTime'] = laps['LapTime'].dt.total_seconds()
+    fastest = laps['LapTime'].min()
+    return fastest
