@@ -72,3 +72,18 @@ def quali_progress(session, driver):
         'q3':q3.total_seconds()}
     return results
 
+
+def qualipositions(driver,circuit, years):
+
+    results = {}
+    for year in years:
+        session = get_session(year, circuit, 'Q')
+        qualiresults = session.results
+        driver_result = qualiresults[qualiresults['Abbreviation']==driver]
+
+        if not driver_result.empty:
+            position= driver_result.iloc[0]['Position']
+            results[year] = int(driver_result.iloc[0]['Position'])
+        else:
+            continue
+    return results

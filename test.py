@@ -152,9 +152,18 @@ print(pitout[['Driver','LapNumber','PitInTime', 'PitOutTime']])
 """
 
 
-
+"""
 session = get_session(2026, 'Monza', 'Q')
 from analyzedata import quali_progress
 
 ver = quali_progress(session, 'VER')
+print(ver)"""
+
+
+
+"""
+from analyzedata import qualipositions
+
+ver = qualipositions('VER', 'Austria', [2022, 2023, 2024, 2025, 2026])
 print(ver)
+"""
