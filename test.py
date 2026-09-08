@@ -122,7 +122,7 @@ res = raceresult(session)
 print(res)"""
 
 
-
+"""
 from analyzedata import fastest_lap, fastestoverall
 session = get_session(2026, 'Monaco', 'Q')
 ver_fastest = fastest_lap(session, 'VER')
@@ -137,4 +137,24 @@ print({overall})
 from analyzedata import get_consistency
 session = get_session(2022, 'Mexico', 'R')
 ver = get_consistency(session,'VER')
+print(ver)
+
+
+
+session = get_session(2026, 'Austria', 'R')
+laps = session.laps
+
+pit_laps=laps[laps['PitInTime'].notna()]
+print(pit_laps[['Driver', 'LapNumber', 'PitInTime', 'PitOutTime']])
+pitout = laps[laps['PitOutTime'].notna()]
+print(pitout[['Driver','LapNumber','PitInTime', 'PitOutTime']])
+
+"""
+
+
+
+session = get_session(2026, 'Monza', 'Q')
+from analyzedata import quali_progress
+
+ver = quali_progress(session, 'VER')
 print(ver)
