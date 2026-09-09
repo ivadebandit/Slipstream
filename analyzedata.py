@@ -87,3 +87,23 @@ def qualipositions(driver,circuit, years):
         else:
             continue
     return results
+
+
+
+
+
+def racepositions(driver, circuit, years):
+    results = {}
+
+    for year in years:
+        session = get_session(year, circuit, 'R')
+        raceres = session.results
+        driverresults = raceres[raceres['Abbreviation'] == driver]
+        if not driverresults.empty:
+
+            position = driverresults.iloc[0]['Position']
+            results[year]= int(driverresults.iloc[0]['Position'])
+
+        else:
+            continue
+    return results

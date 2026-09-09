@@ -167,3 +167,8 @@ from analyzedata import qualipositions
 ver = qualipositions('VER', 'Austria', [2022, 2023, 2024, 2025, 2026])
 print(ver)
 """
+
+"""
+from analyzedata import racepositions
+ver = racepositions('VER', 'Zandvoort', [2020,2021,2022,2023,2024,2025,2026])
+print(ver)"""
