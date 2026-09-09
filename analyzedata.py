@@ -123,5 +123,30 @@ def bestlaps_quali(driver, circuit, years):
         except: 
             continue
     return results
-    
+
+def fastest_all_time(location, years):
+    results = {}
+    for year in years:
+        session= get_session(year, location, 'Q')
+        laps = session.laps
+        filtlaps = laps[laps['TrackStatus'] =='1']
+        filtlaps =filtlaps[filtlaps['Deleted'] == False]
+        filtlaps = filtlaps[filtlaps['IsAccurate'] == True]
+
+
+        fastest = filtlaps.sort_values('LapTime').iloc[0]
+
+
+
+        results[year] = {
+            'time':fastest['LapTime'].total_seconds(),
+            'driver': fastest['Driver'] }
+
+    fastestfastest = min(results, key = lambda x: results[x]['time'])
+
+    return {
+        'time': results[fastestfastest]['time'],
+        'year': fastestfastest,
+        'driver': results[fastestfastest]['driver'] }
+
 

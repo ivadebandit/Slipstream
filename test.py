@@ -194,3 +194,8 @@ from analyzedata import fastest_lap
 session = get_session(2023, 'Zandvoort', 'Q')
 fastest = fastest_lap(session, 'VER')
 print(fastest)"""
+"""
+from analyzedata import fastest_all_time
+
+res = fastest_all_time('Monza', [2021, 2024, 2025, 2026])
+print(res)"""
