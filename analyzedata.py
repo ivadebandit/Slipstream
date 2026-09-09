@@ -107,3 +107,21 @@ def racepositions(driver, circuit, years):
         else:
             continue
     return results
+
+
+
+
+
+def bestlaps_quali(driver, circuit, years):
+    results = {}
+    for year in years:
+        try:
+            session = get_session(year, circuit, 'Q')
+            fastest = fastest_lap(session, driver)
+            if fastest is not None:
+                results[year] = float(fastest)
+        except: 
+            continue
+    return results
+    
+

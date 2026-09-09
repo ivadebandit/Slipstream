@@ -172,3 +172,25 @@ print(ver)
 from analyzedata import racepositions
 ver = racepositions('VER', 'Zandvoort', [2020,2021,2022,2023,2024,2025,2026])
 print(ver)"""
+
+
+"""
+from analyzedata import bestlaps_quali
+ver = bestlaps_quali('VER', 'Zandvoort', [2020, 2021,2023,2025, 2026])
+print(ver)
+"""
+
+
+"""
+from analyzedata import clean_laps
+session = get_session(2023, 'Zandvoort', 'Q')
+laps = clean_laps(session, 'VER')
+print(len(laps))
+print(laps)
+"""
+
+"""
+from analyzedata import fastest_lap
+session = get_session(2023, 'Zandvoort', 'Q')
+fastest = fastest_lap(session, 'VER')
+print(fastest)"""
