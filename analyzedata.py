@@ -150,3 +150,54 @@ def fastest_all_time(location, years):
         'driver': results[fastestfastest]['driver'] }
 
 
+
+
+
+
+def driverstandings(year, races):
+    results = {}
+    for race in races:
+        session = get_session(year, race, 'R')
+        race_results = session.results
+
+        for _, row in race_results.iterrows():
+            driver=row['Abbreviation']
+
+            points= row['Points']
+
+
+            results[driver] = results.get(driver, 0) + points
+    return results
+
+
+def standingssprint(year,races):
+    results={}
+
+
+    for race in races:
+        try:
+            session = get_session(year, race, 'S')
+
+        except:
+            continue
+        race_results = session.results
+        for _, row in race_results.iterrows():
+                driver = row['Abbreviation']
+                points = row['Points']
+
+
+                results[driver] = results.get(driver,0) +points
+    return results
+
+
+
+def totalpoints(year, races):
+
+    racepoints = driverstandings(year, races)
+    sprintpts = standingssprint(year, races)
+    combined = {}
+    for driver, points in racepoints.items():
+        combined[driver] = points
+    for driver, points in sprintpts.items():
+        combined[driver]=combined.get(driver,0) + points
+    return  combined

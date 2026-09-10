@@ -199,3 +199,20 @@ from analyzedata import fastest_all_time
 
 res = fastest_all_time('Monza', [2021, 2024, 2025, 2026])
 print(res)"""
+
+
+
+
+
+from analyzedata import driverstandings, standingssprint, totalpoints
+
+races = ['Zandvoort', 'Monza']
+racepts = driverstandings(2026, races)
+
+print("pts", racepts)
+
+sprintpts= standingssprint(2026, races)
+print("sprint points", sprintpts)
+
+total = totalpoints(2026, races)
+print("total", total)
