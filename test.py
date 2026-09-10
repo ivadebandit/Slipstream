@@ -204,7 +204,7 @@ print(res)"""
 
 
 
-from analyzedata import driverstandings, standingssprint, totalpoints
+"""from analyzedata import driverstandings, standingssprint, totalpoints
 
 races = ['Zandvoort', 'Monza']
 racepts = driverstandings(2026, races)
@@ -215,4 +215,18 @@ sprintpts= standingssprint(2026, races)
 print("sprint points", sprintpts)
 
 total = totalpoints(2026, races)
+print("total", total)
+"""
+
+
+from analyzedata import  teamstandings, teamsprints, totalteams
+races = ['Miami']
+racepts = teamstandings(2026,races)
+sprintpts= teamsprints(2026,races)
+total=totalteams(2026, races)
+
+print("points", racepts)
+print("sprint points", sprintpts)
+
+
 print("total", total)

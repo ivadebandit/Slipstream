@@ -201,3 +201,55 @@ def totalpoints(year, races):
     for driver, points in sprintpts.items():
         combined[driver]=combined.get(driver,0) + points
     return  combined
+
+
+
+
+
+def teamstandings(year, races):
+
+    results = {}
+
+    for race in races:
+        session= get_session(year, race, 'R')
+
+        raceresults = session.results
+        for _, row in raceresults.iterrows():
+            team = row['TeamName']
+
+            points = row['Points']
+            results[team] = results.get(team, 0) +points
+
+    return results
+
+def teamsprints(year, races):
+    results = {}
+    for race in races:
+        try:
+            session = get_session(year, race, 'S')
+        except:
+            continue
+        sprintres = session.results
+        for _, row in sprintres.iterrows():
+
+            team = row['TeamName']
+            points = row['Points']
+            results[team] = results.get(team, 0) + points
+
+    return results
+
+
+
+def totalteams(year,races):
+    racepts = teamstandings(year,races)
+    sprintpts = teamsprints(year,races)
+
+    combined= {}
+    for teams, points in racepts.items():
+        combined[teams] = points
+    for teams, points in sprintpts.items():
+        combined[teams]= combined.get(teams, 0) + points
+
+
+    return combined
+    
