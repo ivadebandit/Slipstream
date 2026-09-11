@@ -253,3 +253,31 @@ def totalteams(year,races):
 
     return combined
     
+
+
+def boxbox(session):
+
+    results =[]
+    laps = session.laps
+
+    drivers =session.laps['Driver'].unique()
+
+
+    for driver in drivers:
+        driver_laps = laps[laps['Driver']==driver]
+        pit_in  = driver_laps[driver_laps['PitInTime'].notna()]
+
+
+        if not pit_in.empty:
+            for _, row in pit_in.iterrows():
+                goin = row['LapNumber']
+                pitin = row['PitInTime']
+                goout = driver_laps[driver_laps['LapNumber'] == goin+1]
+                if not goout.empty:
+                    pitout = goout.iloc[0]['PitOutTime']
+
+
+                    duration = (pitout-pitin).total_seconds()
+                    if duration < 100:
+                        results.append({'driver':driver, 'lap':goin, 'duration': duration})
+    return results

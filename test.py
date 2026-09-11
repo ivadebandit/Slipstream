@@ -219,7 +219,7 @@ print("total", total)
 """
 
 
-from analyzedata import  teamstandings, teamsprints, totalteams
+"""from analyzedata import  teamstandings, teamsprints, totalteams
 races = ['Miami']
 racepts = teamstandings(2026,races)
 sprintpts= teamsprints(2026,races)
@@ -230,3 +230,11 @@ print("sprint points", sprintpts)
 
 
 print("total", total)
+"""
+
+
+"""
+from analyzedata import boxbox
+session= get_session(2026, 'Italian Grand Prix', 'R')
+pitstops = boxbox(session)
+print(pitstops)"""
