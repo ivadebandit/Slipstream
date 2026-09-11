@@ -281,3 +281,31 @@ def boxbox(session):
                     if duration < 100:
                         results.append({'driver':driver, 'lap':goin, 'duration': duration})
     return results
+
+
+
+
+
+def racepace(session, driver):
+    laps = session.laps
+    driverlaps = laps[laps['Driver'] == driver]
+    filtered = driverlaps[driverlaps['TrackStatus'] =='1']
+    filtered = filtered[filtered['IsAccurate'] == True]
+    filtered = filtered[filtered['PitInTime'].isna()]
+    filtered = filtered[filtered['PitOutTime'].isna()]
+
+    filtered = filtered[filtered['LapTime'].notna()]
+
+    filtered['seconds']=filtered['LapTime'].dt.total_seconds()
+
+
+    results = {}
+    stints = filtered['Stint'].unique()
+
+    for stint in stints:
+
+        stintlaps = filtered[filtered['Stint']==stint]
+        avg = stintlaps['seconds'].mean()
+
+        results[int(stint)] = round(float(avg),3)
+    return results

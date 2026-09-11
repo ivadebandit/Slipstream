@@ -238,3 +238,13 @@ from analyzedata import boxbox
 session= get_session(2026, 'Italian Grand Prix', 'R')
 pitstops = boxbox(session)
 print(pitstops)"""
+
+
+
+"""
+
+from analyzedata import racepace
+
+session=get_session(2026, 'Zandvoort', 'R')
+pace = racepace(session,'VER')
+print(pace)"""
