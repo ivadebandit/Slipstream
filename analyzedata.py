@@ -385,4 +385,25 @@ def filtered_laps(session):
     return filtered
 
 
+def trackevo(session):
+    laps = filtered_laps(session)
 
+    laps = laps.sort_values('LapStartTime')
+
+    results = []
+    best = 1000
+
+    for _, row in laps.iterrows():
+        seconds = row['LapTime'].total_seconds()
+        if seconds < best:
+            best = seconds
+
+
+        results.append({
+            'driver': row['Driver'],
+            'lap': row['LapNumber'],
+            'time': round(seconds, 3),
+            'best': round(best,3) })
+
+
+    return results

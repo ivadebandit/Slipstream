@@ -265,3 +265,12 @@ from analyzedata import teammategap_pace
 session = get_session(2026, 'Monza', 'R')
 gap = teammategap_pace(session, 'ANT', 'RUS')
 print(gap)"""
+
+"""
+from analyzedata import trackevo
+
+session = get_session(2026, 'Madrid', 'Q')
+evo = trackevo(session)
+print(evo[:4])
+print(evo[-4])
+"""
