@@ -309,3 +309,47 @@ def racepace(session, driver):
 
         results[int(stint)] = round(float(avg),3)
     return results
+
+
+
+
+def tiredeg(session,driver):
+
+    laps = session.laps
+
+    driverlaps = laps[laps['Driver']==driver]
+    driverlaps = driverlaps[driverlaps['LapTime'].notna()]
+    driverlaps= driverlaps[driverlaps['TyreLife'].notna()]
+    results = []
+
+
+
+    for stint in driverlaps['Stint'].unique():
+        stint_laps = driverlaps[driverlaps['Stint']== stint]
+
+
+        if len(stint_laps) < 5:
+            continue
+        laptimes = []
+
+        for _, row in stint_laps.iterrows():
+            seconds=row['LapTime'].total_seconds()
+            laptimes.append(seconds)
+
+        first5 = laptimes[:5]
+        last5 = laptimes[-5:]
+        firstavg = sum(first5) / 5
+        lastavg = sum(last5) /5
+
+        lapsbetween = len(stint_laps) -5
+        deg = (lastavg - firstavg) / lapsbetween
+
+        results.append({
+                'stint': int(stint),
+                'compound': stint_laps.iloc[0]['Compound'],
+                'deg': round(deg,3)})
+
+
+    return results
+
+

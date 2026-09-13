@@ -248,3 +248,14 @@ from analyzedata import racepace
 session=get_session(2026, 'Zandvoort', 'R')
 pace = racepace(session,'VER')
 print(pace)"""
+
+
+
+
+
+
+"""from analyzedata import tiredeg
+session = get_session(2026, 'Austria', 'R')
+res = tiredeg(session, 'VER')
+print(res)
+"""
