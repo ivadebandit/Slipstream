@@ -288,3 +288,9 @@ from analyzedata import drs_zones
 session = get_session(2025, 'Austria', 'Q')
 zones = drs_zones(session, 'VER')
 print(zones)"""
+
+"""
+from getdata import get_session
+from analyzedata import h2h
+results = h2h('VER', 'HAM', ['Monza', 'Monaco', 'Silverstone'], [2021, 2022, 2023, 2024])
+print(results)"""

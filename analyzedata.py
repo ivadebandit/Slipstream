@@ -435,4 +435,33 @@ def drs_zones(session,driver):
                 'end': round(end_distance,1) })
     return zones
 
-    
+
+
+def h2h(driver1, driver2, races, years):
+    results = {}
+    for race in races:
+
+        d1_wins = 0
+        d2_wins = 0
+        for year in years:
+            session = get_session(year,race, 'Q')
+
+            qualires = session.results
+            d1_res = qualires[qualires['Abbreviation'] == driver1]
+            d2_res = qualires[qualires['Abbreviation'] == driver2]
+
+            d1pos = d1_res.iloc[0]['Position']
+            d2pos = d2_res.iloc[0]['Position']
+            if d1pos < d2pos:
+                d1_wins = d1_wins + 1
+            elif d2pos < d1pos:
+                d2_wins = d2_wins +1
+
+
+
+        results[race] = {
+            'd1_wins': d1_wins,
+            'd2_wins': d2_wins }
+    return results
+
+            
