@@ -274,3 +274,17 @@ evo = trackevo(session)
 print(evo[:4])
 print(evo[-4])
 """
+
+"""
+session = get_session(2025, 'Austria', 'Q')
+laps = session.laps
+ver = laps[laps['Driver'] == 'VER']
+fastest = ver.pick_fastest()
+telemetry = fastest.get_telemetry()
+print(telemetry['DRS'].unique())
+"""
+"""
+from analyzedata import drs_zones
+session = get_session(2025, 'Austria', 'Q')
+zones = drs_zones(session, 'VER')
+print(zones)"""

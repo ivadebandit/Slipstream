@@ -407,3 +407,32 @@ def trackevo(session):
 
 
     return results
+
+
+def drs_zones(session,driver):
+    laps = session.laps
+    driverlaps = laps[laps['Driver'] == driver]
+
+    fastest = driverlaps.pick_fastest()
+    telemetry = fastest.get_telemetry()
+    zones = []
+
+    inzone = False
+    distance_start = None
+
+    for _, row in telemetry.iterrows():
+        drs = row['DRS']
+        open = drs in [10,12,14]
+        if open and not inzone:
+            inzone = True
+            distance_start = row['Distance']
+
+        if not open and inzone:
+            inzone = False
+            end_distance = row['Distance']
+            zones.append({
+                'start': round(distance_start, 1),
+                'end': round(end_distance,1) })
+    return zones
+
+    
