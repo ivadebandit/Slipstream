@@ -373,3 +373,16 @@ def teammategap_pace(session, d1,d2):
         'gap': round(gap, 3),
         'pace1': round(pace1,3),
         'pace2': round(pace2,3) }
+
+
+
+def filtered_laps(session):
+    laps = session.laps
+    filtered = laps[laps['IsAccurate'] == True]
+    filtered= filtered[filtered['TrackStatus'] == '1']
+    filtered = filtered[filtered['Deleted'] == False]
+    filtered = filtered[filtered['LapTime'].notna()]
+    return filtered
+
+
+
