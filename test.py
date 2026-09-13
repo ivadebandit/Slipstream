@@ -259,3 +259,9 @@ session = get_session(2026, 'Austria', 'R')
 res = tiredeg(session, 'VER')
 print(res)
 """
+
+"""
+from analyzedata import teammategap_pace
+session = get_session(2026, 'Monza', 'R')
+gap = teammategap_pace(session, 'ANT', 'RUS')
+print(gap)"""

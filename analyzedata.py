@@ -353,3 +353,23 @@ def tiredeg(session,driver):
     return results
 
 
+
+def teammategap_pace(session, d1,d2):
+
+    laps = session.laps
+    laps1 = clean_laps(session,d1)
+    laps2 = clean_laps(session,d2)
+    pace1 = float(laps1.mean())
+    pace2 =float(laps2.mean())
+
+    if (pace1 < pace2):
+        faster = d1
+        gap = pace2 - pace1
+    else:
+        faster = d2
+        gap = pace1 - pace2
+    return {
+        'faster': faster,
+        'gap': round(gap, 3),
+        'pace1': round(pace1,3),
+        'pace2': round(pace2,3) }
