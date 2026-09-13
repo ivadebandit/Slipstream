@@ -450,6 +450,9 @@ def h2h(driver1, driver2, races, years):
             d1_res = qualires[qualires['Abbreviation'] == driver1]
             d2_res = qualires[qualires['Abbreviation'] == driver2]
 
+
+            if d1_res.empty or d2_res.empty:
+                continue
             d1pos = d1_res.iloc[0]['Position']
             d2pos = d2_res.iloc[0]['Position']
             if d1pos < d2pos:
@@ -464,4 +467,16 @@ def h2h(driver1, driver2, races, years):
             'd2_wins': d2_wins }
     return results
 
+
+
+
+def wet_session(session):
+    laps = session.laps
+    compounds = laps['Compound'].unique()
+    for compound in compounds:
+        if compound == 'INTERMEDIATE' or compound == 'WET':
+            return True
+    else:
+        return False
+    
             
