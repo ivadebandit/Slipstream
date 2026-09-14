@@ -478,5 +478,48 @@ def wet_session(session):
             return True
     else:
         return False
+
+
+
+def wetdrycomp(sessions, drivers):
+    results = {}
     
+
+    for driver in drivers:
+        wet_positions = []
+        dry_positions = []
+
+
+        for session in sessions:
+            session_results = session.results
+            driver_res = session_results[session_results['Abbreviation'] == driver]
+            if driver_res.empty:
+                continue
             
+            position = driver_res.iloc[0]['Position']
+
+            if wet_session(session) == True:
+                wet_positions.append(position)
+            else:
+                dry_positions.append(position)
+
+        if len(wet_positions) >0:
+            wetavg = sum(wet_positions) / len(wet_positions)
+        else:
+            wetavg = None
+        if len(dry_positions)>0:
+            dryavg = sum(dry_positions) / len(dry_positions)
+        else:
+            dryavg = None
+
+        if wetavg is not None and dryavg is not None:
+            advantage = wetavg - dryavg
+        else:
+            advantage = None
+
+        results[driver] = {
+                'advantage': round(float(advantage),3)if advantage is not None else None,
+                'dry': round(float(dryavg), 3) if dryavg is not None else None,
+                'wet': round(float(wetavg), 3) if wetavg is not None else None }
+
+    return results

@@ -294,3 +294,17 @@ from getdata import get_session
 from analyzedata import h2h
 results = h2h('VER', 'HAM', ['Monza', 'Monaco', 'Silverstone'], [2021, 2022, 2023, 2024])
 print(results)"""
+
+
+
+"""
+from analyzedata import wetdrycomp
+sessions = [
+    get_session(2024, 'Canada', 'R'),
+    get_session(2024, 'Brazil', 'R'),
+    get_session(2024, 'Brazil', 'Q'),
+    get_session(2025, 'Jeddah', 'R'),
+    get_session(2026, 'Austria', 'R'),
+    get_session(2025, 'Monza', 'Q') ]
+results = wetdrycomp(sessions, ['VER', 'HAM', 'HAD'])
+print(results)"""
