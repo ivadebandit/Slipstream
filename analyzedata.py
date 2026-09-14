@@ -523,3 +523,31 @@ def wetdrycomp(sessions, drivers):
                 'wet': round(float(wetavg), 3) if wetavg is not None else None }
 
     return results
+
+
+
+
+def reliability(year, races):
+
+    results = {}
+
+
+    for race in races:
+        session = get_session(year, race, 'R')
+        race_res = session.results
+
+        for _, row in race_res.iterrows():
+            driver = row['Abbreviation']
+            status = row['Status']
+            if driver not in results:
+                results[driver] = {'races':0, 'finished':0, 'retired': 0, 'other': 0}
+            results[driver]['races'] = results[driver]['races'] +1
+
+            if status == 'Finished' or status == 'Lapped' or status.startswith('+'):
+                results[driver]['finished']= results[driver]['finished'] +1
+            elif status == 'Withdrew' or status == 'Did not start' or status == 'Disqualified':
+                results[driver]['other'] = results[driver]['other'] + 1
+
+            else:
+                results[driver]['retired'] = results[driver]['retired']+1
+    return results

@@ -308,3 +308,16 @@ sessions = [
     get_session(2025, 'Monza', 'Q') ]
 results = wetdrycomp(sessions, ['VER', 'HAM', 'HAD'])
 print(results)"""
+
+
+"""from getdata import get_session
+session = get_session(2026,'Monaco', 'R')
+print(session.results['Status'].unique())"""
+
+
+"""
+from analyzedata import reliability
+races = ['Madrid']
+years = 2026
+res = reliability(years, races)
+print(res)"""
