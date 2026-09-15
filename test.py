@@ -321,3 +321,9 @@ races = ['Madrid']
 years = 2026
 res = reliability(years, races)
 print(res)"""
+
+"""
+from analyzedata import championship_battle
+races = ['Dutch Grand Prix', 'Monaco']
+res = championship_battle(2026, races)
+print(res)"""

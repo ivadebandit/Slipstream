@@ -527,27 +527,39 @@ def wetdrycomp(sessions, drivers):
 
 
 
-def reliability(year, races):
+def championship_battle(year, races):
+    total = {}
 
-    results = {}
+    progress = []
 
+    for circuit in races:
+        session = get_session(year, circuit, 'R')
+        race_results = session.results
 
-    for race in races:
-        session = get_session(year, race, 'R')
-        race_res = session.results
+        for _, row in race_results.iterrows():
 
-        for _, row in race_res.iterrows():
             driver = row['Abbreviation']
-            status = row['Status']
-            if driver not in results:
-                results[driver] = {'races':0, 'finished':0, 'retired': 0, 'other': 0}
-            results[driver]['races'] = results[driver]['races'] +1
+            points = row['Points']
+            total[driver] = total.get(driver, 0) + points
 
-            if status == 'Finished' or status == 'Lapped' or status.startswith('+'):
-                results[driver]['finished']= results[driver]['finished'] +1
-            elif status == 'Withdrew' or status == 'Did not start' or status == 'Disqualified':
-                results[driver]['other'] = results[driver]['other'] + 1
 
-            else:
-                results[driver]['retired'] = results[driver]['retired']+1
-    return results
+
+        try:
+            sprint = get_session(year, circuit, 'S')
+            sprint_results = sprint.results
+
+            for _, row in sprint_results.iterrows():
+                points = row['Points']
+                driver = row ['Abbreviation']
+                
+
+
+                total[driver] = total.get(driver, 0) + points
+
+        except:
+            pass
+        progress.append ({
+            'race': circuit,
+            'scores': dict(total) })
+
+    return progress
