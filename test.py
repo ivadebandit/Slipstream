@@ -327,3 +327,41 @@ from analyzedata import championship_battle
 races = ['Dutch Grand Prix', 'Monaco']
 res = championship_battle(2026, races)
 print(res)"""
+
+
+"""
+from analyzedata import teammategap_quali
+rb = teammategap_quali('HAM', 'VER', ['Monza', 'Silverstone'], [2023,2024])
+print(rb)
+print(" ")
+print("help")
+laps = session.laps
+ver = laps[laps"""
+"""
+from analyzedata import fastest_lap, clean_laps
+session = get_session(2021, 'Monza', 'Q')
+print("drivers")
+print(session.results['Abbreviation'].unique())
+print("lap count")
+laps = session.laps
+ver = laps[laps['Driver'] == 'PER']
+print(len(ver))
+print("laptimes")
+print(ver['LapTime'].head(2))
+clean = clean_laps(session, 'PER')
+print(len(clean))
+print("fastest")
+print(clean.min())
+print()
+print("fastest 2")
+print(fastest_lap(session, 'PER'))"""
+
+
+
+
+
+
+
+from analyzedata import teammategap_quali
+res = teammategap_quali('VER', 'PER', ['Monza'], [2021])
+print(res)

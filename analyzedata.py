@@ -563,3 +563,39 @@ def championship_battle(year, races):
             'scores': dict(total) })
 
     return progress
+
+
+
+
+
+def teammategap_quali(driver1,driver2,races, years):
+
+    results = []
+    for race in races:
+        for year in years:
+            try:
+                session = get_session(year, race, 'Q')
+            except:
+                continue
+
+            d1lap  = fastest_lap(session, driver1)
+            d2lap = fastest_lap(session, driver2)
+            if d1lap is None or d2lap is None:
+                continue
+
+            gap = d1lap - d2lap
+            if gap < 0:
+                faster = driver1
+                gap = gap * -1
+            else:
+                faster = driver2
+
+
+            results.append({
+                'event': race,
+                'year': year,
+                'gap': round(float(gap),2),
+                'faster': faster })
+    return results
+
+
