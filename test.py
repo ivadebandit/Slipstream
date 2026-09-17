@@ -400,3 +400,10 @@ session = get_session(2026, 'Madrid', 'Q')
 res = delta('VER', 'RUS', session)
 print(res[:5])
 print(res[-5:])"""
+
+
+"""
+from analyzedata import perfectlap
+session = get_session(2026, 'Madrid', 'Q')
+ver = perfectlap(session, 'VER')
+print(ver)"""

@@ -644,3 +644,45 @@ def delta(driver1, driver2, session):
     return result
 
 
+
+
+
+def perfectlap(session, driver):
+
+    laps = session.laps
+    driverlaps = laps[laps['Driver'] == driver]
+    fastest = driverlaps.pick_fastest()
+
+    driverlaps = driverlaps[driverlaps['Sector1Time'].notna()]
+    driverlaps=driverlaps[driverlaps['Sector2Time'].notna()]
+    driverlaps=driverlaps[driverlaps['Sector3Time'].notna()]
+
+
+
+    s1 =driverlaps['Sector1Time'].min().total_seconds()
+    s2 = driverlaps['Sector2Time'].min().total_seconds()
+    s3 = driverlaps['Sector3Time'].min().total_seconds() 
+
+    s1q = fastest['Sector1Time'].total_seconds()
+    s2q = fastest['Sector2Time'].total_seconds()
+    s3q= fastest['Sector3Time'].total_seconds()
+
+    ideal = s1 + s2 + s3
+    actual = s1q + s2q + s3q
+    ideal = round(ideal, 3)
+    actual = round(actual,3)
+
+    return  {
+        's1': {'best': round(s1,3), 'actual': round(s1q,3) },
+        's2': {'best': round(s2,3), 'actual': round(s2q , 3)},
+        's3': {'best':round(s3,3), 'actual': round(s3q , 3) },
+        'actual': actual,
+        'ideal': ideal,
+        'gap': round(actual - ideal, 3) }
+
+
+
+
+
+
+    
