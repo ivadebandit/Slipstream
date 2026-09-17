@@ -360,8 +360,43 @@ print(fastest_lap(session, 'PER'))"""
 
 
 
-
+"""
 
 from analyzedata import teammategap_quali
 res = teammategap_quali('VER', 'PER', ['Monza'], [2021])
-print(res)
+print(res)"""
+
+
+
+"""
+session = get_session(2025, 'Monza', 'Q')
+laps=session.laps
+
+ver = laps[laps['Driver'] == 'VER'].pick_fastest()
+ham = laps[laps['Driver'] == 'HAM'].pick_fastest()
+tel1 = ver.get_telemetry()
+tel2 = ham.get_telemetry()
+
+print("ver", len(tel1))
+
+print("ham", len(tel2))
+print(tel1[['Distance', 'Time']].head())"""
+
+
+"""
+
+from analyzedata import delta
+session = get_session(2025, 'Monza', 'Q')
+delta('VER', 'HAM', session)
+print(delta)"""
+
+
+
+
+"""
+from analyzedata import delta
+
+session = get_session(2026, 'Madrid', 'Q')
+res = delta('VER', 'RUS', session)
+print(res[:5])
+print(res[-5:])"""

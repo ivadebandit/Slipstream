@@ -599,3 +599,48 @@ def teammategap_quali(driver1,driver2,races, years):
     return results
 
 
+import numpy as np
+from scipy import interpolate
+
+def delta(driver1, driver2, session):
+
+    laps = session.laps
+    laps1 = laps[laps['Driver'] == driver1]
+    #filt1 = filtered_laps(laps1)
+    fastest1 = laps1.pick_fastest()
+
+    laps2 = laps[laps['Driver'] == driver2]
+    #filt2 = filtered_laps(laps2)
+    fastest2 = laps2.pick_fastest()
+
+    tel1 = fastest1.get_telemetry()
+    tel2 = fastest2.get_telemetry()
+
+
+    tel1['seconds']=tel1['Time'].dt.total_seconds()
+    tel2['seconds'] = tel2['Time'].dt.total_seconds()
+
+    max1 = tel1['Distance'].max()
+    max2 = tel2['Distance'].max()
+    maxdist = min(max1, max2)
+
+
+    f1 = interpolate.interp1d(tel1['Distance'], tel1['seconds'], fill_value='extrapolate')
+    f2= interpolate.interp1d(tel2['Distance'], tel2['seconds'], fill_value= 'extrapolate')
+
+
+
+    d = 0
+    result = []
+    while d < maxdist:
+        d1 = f1(d)
+        d2= f2(d)
+        deltaa = d1 - d2
+
+        result.append({
+            'distance': d,
+            'delta': round(float(deltaa),3)})
+        d = d + 10
+    return result
+
+
