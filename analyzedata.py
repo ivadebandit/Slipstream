@@ -682,6 +682,34 @@ def perfectlap(session, driver):
 
 
 
+def lap1start(session):
+
+    laps = session.laps
+    lap1 = laps[laps['LapNumber'] == 1]
+    results = session.results
+
+    output = []
+
+
+    for _, rows in lap1.iterrows():
+        driver = rows['Driver']
+        lap1_pos = int(rows['Position'])
+
+        driver_res = results[results['Abbreviation'] == driver]
+        if not driver_res.empty:
+            grid = int(driver_res.iloc[0]['GridPosition'])
+
+            diff = grid - lap1_pos
+
+            
+
+            output.append({
+                'driver':driver,
+                'grid': grid,
+                'lap1': lap1_pos,
+                'change':diff })
+    return output
+
 
 
 
