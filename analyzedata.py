@@ -810,7 +810,66 @@ def fuel_effect(session,driver):
                 'laps': len(stintlaps)
                 }
     return results
+
+
+
+
+def undercuteffect(session, driver1, driver2):
+    laps = session.laps
+
+    results = []
+
+    laps1 = laps[laps['Driver'] == driver1]
+    laps2 = laps[laps['Driver'] == driver2]
+    pits1=laps1[laps1['PitInTime'].notna()]
+    pits2 =laps2[laps2['PitInTime'].notna()]
+    out1 = laps1[laps1['PitInTime'].notna()]
+    out2 = laps1[laps1['PitInTime'].notna()]
+
+    for _, pit1 in pits1.iterrows():
+        pit1lap = pit1['LapNumber']
+        later_pits = pits2[pits2['LapNumber']> pit1lap]
+        if later_pits.empty:
+            continue
+        pit2lap =later_pits.iloc[0]['LapNumber']
+        checkpoint1 = pit1lap-1
+        checkpoint2 = pit1lap + 1
+        checkpoint3 = pit2lap + 1
+
+        c1d1 = laps1[laps1['LapNumber'] == checkpoint1]
+        c1d2 = laps2[laps2['LapNumber'] == checkpoint1]
+        c2d1 = laps1[laps1['LapNumber'] == checkpoint2]
+        c2d2 = laps2[laps2['LapNumber'] == checkpoint2]
+        c3d1 = laps1[laps1['LapNumber'] == checkpoint3]
+        c3d2 = laps2[laps2['LapNumber'] == checkpoint3]
+
+        if c1d1.empty or c1d2.empty  or c2d1.empty or c2d2.empty or c3d1.empty or c3d2.empty:
+            continue
+
+        d11 = c1d1.iloc[0]['Position']
+        d21 = c1d2.iloc[0]['Position']
+        d12 = c2d1.iloc[0]['Position']
+        d22 = c2d2.iloc[0]['Position']
+        d13 = c3d1.iloc[0]['Position']
+        d23 = c3d2.iloc[0]['Position']
+
+        wasbehind = d11 > d21
+        stillbehind = d12 > d22
+        aheadafter = d13 < d23
+        success = wasbehind and aheadafter
+
+        results.append({
+            'pit1_lap': int(pit1lap),
+            'pit2_lap': int(pit2lap),
+            'before': { 'd1': int(d11), 'd2': int(d21)},
+            'after_d1_pit': {'d1': int(d12), 'd2':int(d22)},
+            'after_d2_pit': {'d1': int(d13), 'd2': int(d23)},
+            'success':bool(success) })
+    return results
+
         
+
+
 
 
 

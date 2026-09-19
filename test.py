@@ -429,3 +429,10 @@ from analyzedata import fuel_effect
 session = get_session(2026, 'Zandvoort', 'R')
 result = fuel_effect(session, 'LEC')
 print(result)"""
+
+
+"""
+from analyzedata import undercuteffect
+session = get_session(2024, 'Hungary', 'R')
+res = undercuteffect(session, 'VER', 'HAM')
+print(res)"""
