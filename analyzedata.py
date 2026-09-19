@@ -774,9 +774,43 @@ def circuit_type(circuit):
 
 
 
+def fuel_effect(session,driver):
 
 
-    
+    laps = filtered_laps(session)
+    laps = laps[laps['Driver'] == driver]
+    laps = laps[laps['PitInTime'].isna()]
+    laps = laps[laps['PitOutTime'].isna()]
+
+    laps = laps.copy()
+    laps['seconds'] = laps['LapTime'].dt.total_seconds()
+
+    results = {}
+
+
+    for stint in laps['Stint'].unique():
+        stintlaps = laps[laps['Stint'] == stint]
+        stintlaps = stintlaps.sort_values('TyreLife')
+        changes = []
+
+        if len(stintlaps) < 2:
+            continue
+
+        for i in range(1, len(stintlaps)):
+            prev = stintlaps.iloc[i-1]['seconds']
+            curr= stintlaps.iloc[i]['seconds']
+
+            changes.append(curr - prev)
+
+        if len(changes) > 0:
+            avg = float(sum(changes) / len(changes))
+
+            results[int(stint)] = {
+                'fuel_effect': round(avg, 3),
+                'laps': len(stintlaps)
+                }
+    return results
+        
 
 
 

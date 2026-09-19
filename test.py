@@ -422,3 +422,10 @@ from analyzedata import circuit_type
 print(circuit_type('Suzuka'))
 print(circuit_type('Monza'))
 """
+
+
+"""
+from analyzedata import fuel_effect
+session = get_session(2026, 'Zandvoort', 'R')
+result = fuel_effect(session, 'LEC')
+print(result)"""
