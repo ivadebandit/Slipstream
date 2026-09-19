@@ -415,3 +415,10 @@ from analyzedata import lap1start
 session = get_session(2026, '  Australia', 'R')
 a = lap1start(session)
 print(a)"""
+
+
+"""
+from analyzedata import circuit_type
+print(circuit_type('Suzuka'))
+print(circuit_type('Monza'))
+"""

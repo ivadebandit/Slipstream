@@ -713,4 +713,71 @@ def lap1start(session):
 
 
 
+
+def circuit_type(circuit):
+    # hardcoded because i realised i cant classify them with code lowkey
+    # also this is based on my knowledge so hopefully correct
+    types = {
+        'Monaco': 'street',
+        'Monte Carlo': 'street',
+        'Singapore': 'street',
+        'Jeddah': 'street',
+        'Las Vegas': 'street',
+        'Miami': 'street',
+        'Madrid': 'street',
+        'Australia':'street',
+        'Albert Park': 'street',
+        'Baku': 'street',
+        'Azerbaijan': 'street',
+        'Mexico':'street',
+        'Qatar': 'street',
+        'Lusail': 'street',
+        'Saudi Arabia': 'street',
+        'Monza': 'power',
+        'Spa': 'power',
+        'Austria': 'power', 
+        'Hungaroring': 'high_df',
+        'Hungary': 'high_df',
+        'Barcelona': 'high_df',
+        'Zandvoort': 'high_df',
+        'Monaco': 'high_df',
+        'Silverstone': 'high_speed',
+        'Suzuka': 'high_speed',
+        'Japan': 'high_speed',
+        'COTA': 'technical',
+        'Interlagos': 'technical',
+        'Mexico ': 'technical',
+        'Bahrain': 'balanced',
+        'Sakhir': 'balanced',
+        'Melbourne': 'balanced',
+        'Montreal': 'balanced',
+        'Canada': 'balanced',
+        'China': 'balanced',
+        'Shanghai': 'abalnced',
+        'Portimao': 'balanced',
+        'Portugal': 'balanced',
+        'Mugello': 'high_speed',
+        'Nurburgring':'technical',
+        'Germany': 'technical',
+        'Istanbul': 'technical',
+        'Sochi': 'high_downforce',
+        'Russia': 'high_downforce',
+        'Yas Marina': 'balanced',
+        'Abu Dhabi':'balanced',
+        'Hockenheim': 'balanced',
+        'Paul Ricard': 'technical',
+        'France': 'technical',
+        'Qatar': 'balanced ',
+        'Imola': 'balanced'
+    }
+    return types.get(circuit, 'unknown')
+
+
+
+
+
+    
+
+
+
     
