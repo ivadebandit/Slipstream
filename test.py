@@ -326,8 +326,8 @@ print(res)"""
 from analyzedata import championship_battle
 races = ['Dutch Grand Prix', 'Monaco']
 res = championship_battle(2026, races)
-print(res)"""
-
+print(res)
+"""
 
 """
 from analyzedata import teammategap_quali
@@ -386,21 +386,20 @@ print(tel1[['Distance', 'Time']].head())"""
 """
 
 from analyzedata import delta
-session = get_session(2025, 'Monza', 'Q')
-delta('VER', 'HAM', session)
-print(delta)"""
-
-
-
+session = get_session(2026, 'Madrid', 'Q')
+delta('VER', 'ANT', session)
+print(delta)
 
 """
+"""
+
+from getdata import get_session
 from analyzedata import delta
-
 session = get_session(2026, 'Madrid', 'Q')
-res = delta('VER', 'RUS', session)
+res = delta('VER', 'ANT', session)
 print(res[:5])
-print(res[-5:])"""
-
+print(res[-5:])
+"""
 
 """
 from analyzedata import perfectlap
@@ -436,3 +435,10 @@ from analyzedata import undercuteffect
 session = get_session(2024, 'Hungary', 'R')
 res = undercuteffect(session, 'VER', 'HAM')
 print(res)"""
+
+
+"""
+from analyzedata import overcuteffect
+session = get_session(2023, 'Bahrain', 'R')
+result = overcuteffect(session, 'STR', 'RUS')
+print(result)"""

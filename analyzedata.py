@@ -867,6 +867,78 @@ def undercuteffect(session, driver1, driver2):
             'success':bool(success) })
     return results
 
+
+
+
+def overcuteffect(session, driver1, driver2):
+    laps = session.laps
+    results = []
+
+
+    laps1 = laps[laps['Driver'] ==driver1]
+    laps2 = laps[laps['Driver'] ==driver2]
+    pits1 = laps1[laps1['PitInTime'].notna()]
+    pits2 = laps2[laps2['PitInTime'].notna()]
+
+    maxlap =laps['LapNumber'].max()
+    for _, pit2 in pits2.iterrows():
+        pit2lap = pit2['LapNumber']
+        later_pits = pits1[pits1['LapNumber'] > pit2lap]
+        if later_pits.empty:
+            continue
+        pit1lap = later_pits.iloc[0]['LapNumber']
+
+
+        gap = pit1lap-pit2lap
+        if  gap <= 0:
+            continue
+
+        checkpoint1 = pit2lap -1 
+        checkpoint2 = pit2lap +2
+        checkpoint3 = pit1lap + gap
+
+        if checkpoint3 > maxlap:
+            checkpoint3 = int(maxlap)
+
+        c1d1 = laps1[laps1['LapNumber'] == checkpoint1]
+        c1d2 = laps2[laps2['LapNumber'] == checkpoint1]
+        c2d1=laps1[laps1['LapNumber']== checkpoint2]
+        c2d2 = laps2[laps2['LapNumber'] == checkpoint2]
+        c3d1 =laps1[laps1['LapNumber'] == checkpoint3]
+        c3d2 = laps2[laps2['LapNumber']==checkpoint3]
+
+
+        if c1d1.empty or c2d1.empty or c3d1.empty or c1d2.empty or c2d2.empty or c3d2.empty:
+            continue
+        d11 = c1d1.iloc[0]['Position']
+        d12 = c2d1.iloc[0]['Position']
+        d13 = c3d1.iloc[0]['Position']
+        d21 = c1d2.iloc[0]['Position']
+        d22 = c2d2.iloc[0]['Position']
+        d23= c3d2.iloc[0]['Position']
+        was_ahead = d11 < d21
+        still_ahead =d13<d23
+        success = was_ahead and still_ahead
+
+
+        results.append({
+            'pit1lap': int(pit1lap),
+            'pit2lap': int(pit2lap),
+            'gap':int(gap),
+            'before':{ 'd1': int(d11), 'd2': int(d21)},
+            'afterd2pit': {'d1': int(d12), 'd2':int(d22)},
+            'afterd1pit':{'d1': int(d13), 'd2':int(d23)},
+            'success': bool(success) })
+    return results
+
+
+
+
+
+
+
+    
+
         
 
 
