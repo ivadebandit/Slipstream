@@ -442,3 +442,35 @@ from analyzedata import overcuteffect
 session = get_session(2023, 'Bahrain', 'R')
 result = overcuteffect(session, 'STR', 'RUS')
 print(result)"""
+
+
+"""
+from analyzedata import safetycar_impact
+session = get_session(2026, 'Netherlands', 'R')
+res = safetycar_impact(session)
+print(res) """
+
+"""
+session = get_session(2026, 'Madrid', 'R')
+print(session.laps['TrackStatus'].unique())"""
+"""
+session = get_session(2026, 'Zandvoort', 'R')
+print(session.laps['TrackStatus'].unique())""" 
+
+
+
+"""session = get_session(2024, 'Spa', 'Q')
+res = session.results
+print(res[res['Abbreviation'] == 'VER'][['Abbreviation', 'Position']])
+race = get_session(2024, 'Spa', 'R')
+raceres = race.results
+print(raceres[raceres['Abbreviation'] == 'VER'][['Abbreviation', 'GridPosition']])
+"""
+
+"""
+from analyzedata import wins_count, podium_count, pole_count
+
+races = ['Bahrain', 'Jeddah', 'Melbourne', 'Suzuka', 'Imola']
+print(wins_count([2024], races, 'VER'))
+print(podium_count([2024], races, 'VER'))
+print(pole_count([2024], races, 'VER'))"""

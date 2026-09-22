@@ -935,14 +935,126 @@ def overcuteffect(session, driver1, driver2):
 
 
 
-
-
+"""def safetycar_impact(session):
+    laps = session.laps
+    lapnumbers = sorted(laps['LapNumber'].unique())
+    #sc = laps[laps['TrackStatus'] == '4']
     
+    periods = []
+    prev_status = None
+    period_start = None
+    
+    for lap in lapnumbers:
+        laplaps = laps[laps['LapNumber'] == lap]
+        statuses=laplaps['TrackStatus'].unique()
 
+        status = '1'
+        for i in statuses:
+            if '4' in i:
+                status = '4'
+            elif '5' in i and status != '4':
+                status = '5' 
         
-
-
-
-
+        if status in ['4', '5']:
+            if prev_status not in ['4', '5']:
+                period_start = lap
+            prev_status = status
+        else:
+            if prev_status in ['4', '5'] and period_start is not None:
+                periods.append({
+                    'type': prev_status,
+                    'start': int(period_start),
+                    'end': int(lap) - 1 })
+            prev_status = status
 
     
+    if prev_status in ['4', '5'] and period_start is not None:
+        periods.append({
+            'type': prev_status,
+            'start': int(period_start),
+            'end': int(lapnumbers[-1]) })
+    
+    sclaps = 0
+    vsclaps = 0
+    redflag = 0
+    
+    for period in periods:
+        laps_count = period['end'] - period['start'] + 1
+        period['laps'] = laps_count
+        
+        if period['type'] == '4':
+            period['type'] = 'SC'
+            sclaps = sclaps + laps_count
+        elif period['type'] =='5':
+            period['type'] = 'VSC'
+            vsclaps = vsclaps + laps_count
+        
+    
+    race_laps = int(max(lapnumbers))
+    total_disrupted = sclaps + vsclaps
+    
+    return {
+        'periods': periods,
+        'totallaps_sc': sclaps,
+        'totallaps_vsc': vsclaps,
+        'total_disrupted':total_disrupted,
+        'race_laps': race_laps}"""
+
+
+
+def wins_count(years, races, driver):
+
+    wins = 0
+
+
+    for year in years:
+        for race in races:
+            session = get_session(year, race, 'R')
+            results = session.results
+            driver_res = results[results['Abbreviation'] == driver]
+            if not driver_res.empty:
+                pos=driver_res.iloc[0]['Position']
+                if pos == 1:
+                    wins = wins +1
+
+    return wins
+
+
+
+
+def podium_count(years,races, driver):
+
+    podiums  = 0
+    for year in years:
+        for race in races:
+            session = get_session(year, race, 'R')
+            results = session.results
+            driver_res =  results[results['Abbreviation'] ==driver]
+
+            if not driver_res.empty:
+                pos = driver_res.iloc[0]['Position']
+                if pos < 4:
+                    podiums = podiums +1
+    return podiums
+
+
+
+
+def pole_count(years, races,driver):
+    poles = 0
+    for year in years:
+        for race in races:
+            try:
+                session = get_session(year,race, 'Q')
+            except:
+                continue
+            results = session.results
+            driver_res = results[results['Abbreviation'] == driver]
+            if not driver_res.empty:
+
+                pos = driver_res.iloc[0]['Position']
+                if pos ==1:
+                    poles = poles + 1
+    return poles
+
+            
