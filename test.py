@@ -474,3 +474,12 @@ races = ['Bahrain', 'Jeddah', 'Melbourne', 'Suzuka', 'Imola']
 print(wins_count([2024], races, 'VER'))
 print(podium_count([2024], races, 'VER'))
 print(pole_count([2024], races, 'VER'))"""
+
+
+"""
+from analyzedata import bestfinish
+print(bestfinish('VER', 'Monza', [2022,2023]))"""
+
+"""
+from analyzedata import worstfinish
+print(worstfinish('VER', 'Monza', [2021, 2023]))"""

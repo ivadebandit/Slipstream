@@ -1058,3 +1058,49 @@ def pole_count(years, races,driver):
     return poles
 
             
+
+def bestfinish(driver, circuit, years):
+
+    best = None
+    for year in years:
+        session  = get_session(year, circuit, 'R')
+
+        results = session.results
+        driver_res = results[results['Abbreviation'] == driver]
+        if not driver_res.empty:
+            pos = driver_res.iloc[0]['Position']
+
+            if best is None or pos < best:
+                best = pos
+    return int(best) if best is not None else None
+
+
+
+
+def worstfinish(driver, circuit,years):
+    worst = None
+    dnf = False
+
+    for year in years:
+        session = get_session(year,circuit, 'R')
+
+        results = session.results
+        driver_res = results[results['Abbreviation'] ==driver]
+        if not driver_res.empty:
+            status = driver_res.iloc[0]['Status']
+
+            if status == 'Finished' or status == 'Lapped' or status.startswith('+'):
+                pos = driver_res.iloc[0]['Position']
+                if worst is None or pos > worst:
+                    worst = pos
+            else:
+                dnf = True
+
+    if dnf:
+        return 'DNF'
+    return int(worst) if worst is not None else None
+
+
+
+
+
