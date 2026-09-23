@@ -483,3 +483,7 @@ print(bestfinish('VER', 'Monza', [2022,2023]))"""
 """
 from analyzedata import worstfinish
 print(worstfinish('VER', 'Monza', [2021, 2023]))"""
+
+"""
+from analyzedata import avgfinish
+print(avgfinish('VER', 'Monza', [2021,2022,2023,2024]))"""

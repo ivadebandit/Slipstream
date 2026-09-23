@@ -1101,6 +1101,21 @@ def worstfinish(driver, circuit,years):
     return int(worst) if worst is not None else None
 
 
+def avgfinish(driver,circuit,years):
+    positions =[]
+    for year in years:
+        session = get_session(year, circuit, 'R')
+        results = session.results
 
+        driver_res = results[results['Abbreviation'] ==driver]
+        if not driver_res.empty:
+            status = driver_res.iloc[0]['Status']
 
+            if status == 'Finished' or status == 'Lapped' or status.startswith('+'):
+                pos = driver_res.iloc[0]['Position']
+                positions.append(pos)
 
+    if len(positions) == 0:
+        return None
+    avg = sum(positions) / len(positions)
+    return round(avg, 2)
