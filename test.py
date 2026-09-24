@@ -487,3 +487,10 @@ print(worstfinish('VER', 'Monza', [2021, 2023]))"""
 """
 from analyzedata import avgfinish
 print(avgfinish('VER', 'Monza', [2021,2022,2023,2024]))"""
+
+
+"""
+from analyzedata import fastestoverall
+session = get_session(2026, 'Madrid', 'Q')
+res = fastestoverall(session)
+print(res)"""

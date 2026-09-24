@@ -1119,3 +1119,41 @@ def avgfinish(driver,circuit,years):
         return None
     avg = sum(positions) / len(positions)
     return round(avg, 2)
+
+
+
+
+def fastestoverall(session):
+
+    laps = session.laps
+    laps = laps[laps['LapTime'].notna()]
+    fastest = laps.pick_fastest()
+
+    overall = laps.dropna(subset=['Sector1Time', 'Sector2Time', 'Sector3Time'])
+
+
+    # fastest = laps['LapTime'].min().total_seconds()
+    s1 = laps['Sector1Time'].min().total_seconds()
+    s2 = laps['Sector2Time'].min().total_seconds()
+    s3 = laps['Sector3Time'].min().total_seconds()
+
+
+    laps1 = fastest['Sector1Time'].total_seconds()
+    laps2 =fastest['Sector2Time'].total_seconds()
+    laps3= fastest['Sector3Time'].total_seconds()
+    together = s1 + s2 + s3
+    #together = int(together.total_seconds())
+
+    return{
+        'overall': {
+            'lap': round(together,3),
+            's1': round(s1,3),
+            's2': round(s2,3),
+            's3': round(s3,3) },
+        'lap': {
+            'lap': round(fastest['LapTime'].total_seconds(),3),
+            's1':round(laps1,3),
+            's2':round(laps2,3),
+            's3': round(laps3,3)}}
+
+
