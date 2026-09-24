@@ -1178,3 +1178,32 @@ def positionsgained(session):
     return positions
 
 
+
+
+def stintsum(session,driver):
+    laps = session.laps
+    driverlaps = laps[laps['Driver'] ==driver]
+
+    driverlaps = driverlaps[driverlaps['LapTime'].notna()]
+    driverlaps=driverlaps[driverlaps['Stint'].notna()]
+    driverlaps= driverlaps[driverlaps['Compound'].notna()]
+    driverlaps = driverlaps[driverlaps['PitInTime'].isna()]
+    driverlaps= driverlaps[driverlaps['PitOutTime'].isna()]
+
+    results = []
+
+    for stint in driverlaps['Stint'].unique():
+        stintlaps = driverlaps[driverlaps['Stint'] ==stint]
+        stintlaps = stintlaps.sort_values('LapNumber')
+        for _, row in stintlaps.iterrows():
+            results.append({
+                'stint': int(stint),
+                'driver':driver,
+                'lap': int(row['LapNumber']),
+                'compound': row['Compound'],
+                'tyre_life':int(row['TyreLife'])
+                    if pd.notna(row['TyreLife']) else None,
+                'lap_time': round(
+                    float(row['LapTime'].total_seconds()),3) })
+
+    return results

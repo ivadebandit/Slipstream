@@ -501,3 +501,12 @@ print(res)"""
 session = get_session(2024, 'Brazil', 'R')
 res = positionsgained(session)[0]
 print(res)"""
+
+
+"""
+from analyzedata import stintsum
+session = get_session(2026, 'Madrid', 'R')
+res = stintsum(session, 'HAM')
+print(res[:5])
+print(res[-5:])
+print(len(res))"""
