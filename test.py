@@ -517,3 +517,10 @@ from analyzedata import compound_usage
 session = get_session(2025, 'Spain', 'R')
 res = compound_usage(session, 'VER')
 print(res)"""
+
+"""
+
+from analyzedata import compound_pace
+session = get_session(2026, 'Madrid', 'R')
+ver = compound_pace(session, 'VER')
+print(ver)"""

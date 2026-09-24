@@ -1233,4 +1233,27 @@ def compound_usage(session,driver):
             'end_lap': int(stintlaps['LapNumber'].max())})
     return results
 
-                
+
+
+def compound_pace(session,driver):
+
+    laps = session.laps
+    driverlaps=laps[laps['Driver']==driver]
+    driverlaps = driverlaps[driverlaps['LapTime'].notna()]
+    driverlaps=driverlaps[driverlaps['PitInTime'].isna()]
+    driverlaps=driverlaps[driverlaps['PitOutTime'].isna()]
+    driverlaps=driverlaps[driverlaps['Compound'].notna()]
+
+    results =[]
+    for compound in driverlaps['Compound'].unique():
+        compoundlaps = driverlaps[driverlaps['Compound']==compound]
+        laptimes =compoundlaps['LapTime'].dt.total_seconds()
+
+        results.append({
+            'driver':driver,
+            'compound':compound,
+            'laps': len(compoundlaps),
+            'average': round(float(laptimes.mean()), 3),
+            'fastest': round(float(laptimes.min()),3),
+            'slowest':round(float(laptimes.max()),3) })
+    return results
