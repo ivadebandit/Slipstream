@@ -1157,3 +1157,24 @@ def fastestoverall(session):
             's3': round(laps3,3)}}
 
 
+
+
+def positionsgained(session):
+    results = session.results
+    results = results.dropna(subset=['GridPosition', 'Position'])
+
+    positions = []
+    for _, row in results.iterrows():
+        driver=row['Abbreviation']
+        start= row['GridPosition']
+        end = row['Position']
+        gain = start - end
+
+        positions.append({
+            'driver':driver,
+            'start':start,
+            'finish': end,
+            'gain': gain })
+    return positions
+
+

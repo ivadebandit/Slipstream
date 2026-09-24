@@ -494,3 +494,10 @@ from analyzedata import fastestoverall
 session = get_session(2026, 'Madrid', 'Q')
 res = fastestoverall(session)
 print(res)"""
+
+
+
+"""from analyzedata import positionsgained
+session = get_session(2024, 'Brazil', 'R')
+res = positionsgained(session)[0]
+print(res)"""
