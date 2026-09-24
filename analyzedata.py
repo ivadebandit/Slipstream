@@ -1207,3 +1207,30 @@ def stintsum(session,driver):
                     float(row['LapTime'].total_seconds()),3) })
 
     return results
+
+
+
+def compound_usage(session,driver):
+    laps = session.laps
+    driverlaps = laps[laps['Driver']==driver]
+
+    driverlaps=driverlaps[driverlaps['Compound'].notna()]
+    driverlaps=driverlaps[driverlaps['LapNumber'].notna()]
+
+    driverlaps = driverlaps[driverlaps['Stint'].notna()]
+    results =[]
+
+    for stint in driverlaps['Stint'].unique():
+        stintlaps = driverlaps[driverlaps['Stint']==stint]
+        compound = stintlaps.iloc[0]['Compound']
+
+        results.append({
+            'driver':driver,
+            'stint': int(stint),
+            'compound': compound,
+            'laps': len(stintlaps),
+            'start_lap':int(stintlaps['LapNumber'].min()),
+            'end_lap': int(stintlaps['LapNumber'].max())})
+    return results
+
+                

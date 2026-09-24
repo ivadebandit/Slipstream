@@ -510,3 +510,10 @@ res = stintsum(session, 'HAM')
 print(res[:5])
 print(res[-5:])
 print(len(res))"""
+
+
+"""
+from analyzedata import compound_usage
+session = get_session(2025, 'Spain', 'R')
+res = compound_usage(session, 'VER')
+print(res)"""
