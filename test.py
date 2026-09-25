@@ -524,3 +524,9 @@ from analyzedata import compound_pace
 session = get_session(2026, 'Madrid', 'R')
 ver = compound_pace(session, 'VER')
 print(ver)"""
+
+"""
+from analyzedata import position_progress
+session =get_session(2024, 'Brazil','R')
+ver = position_progress(session, 'VER')
+print(ver)"""

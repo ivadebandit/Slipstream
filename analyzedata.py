@@ -1257,3 +1257,22 @@ def compound_pace(session,driver):
             'fastest': round(float(laptimes.min()),3),
             'slowest':round(float(laptimes.max()),3) })
     return results
+
+
+
+
+def position_progress(session,driver):
+
+    laps = session.laps
+    driverlaps =laps[laps['Driver']== driver]
+    driverlaps = driverlaps.dropna(subset=['LapNumber','Position'])
+    driverlaps=driverlaps.sort_values('LapNumber')
+
+    results =[]
+    for _, row in driverlaps.iterrows():
+        results.append({
+            'driver':driver,
+            'lap': int(row['LapNumber']),
+            'position':int(row['Position'])})
+    return results
+    
