@@ -526,7 +526,117 @@ ver = compound_pace(session, 'VER')
 print(ver)"""
 
 """
+
 from analyzedata import position_progress
 session =get_session(2024, 'Brazil','R')
 ver = position_progress(session, 'VER')
 print(ver)"""
+
+
+
+
+
+
+
+
+
+import matplotlib.pyplot as plt
+"""
+x = [1,2,3,4,5,6] #must have same amount elem in x and y
+y=[5,4,4,3,2,2]
+y2=[6,5,4,4,3,3]
+# plt.figure(figsize=(2,2))
+# plt.plot(x,y, marker='o', color='red', linewidth=1) # adda a dot at each point
+plt.plot(x,y, marker='o', label='driver 1')
+plt.plot(x,y2, marker='o',label='driver 2')
+
+plt.title('test test')
+plt.xlabel('laps')
+plt.ylabel('position')
+plt.grid(True) # add grid
+plt.show()
+"""
+
+"""
+drivers =['VER','HAM','LEC','NOR']
+wins = [63,104,7,1]
+plt.bar(drivers,wins)
+plt.title('driver wins')
+plt.xlabel('driver')
+plt.ylabel('wins')
+plt.show()
+"""
+"""
+laps = [1,2,3,4,5,6]
+laptimes = [92.4, 91.8, 92.1, 91.5, 91.2, 91.6]
+
+plt.scatter(laps, laptimes)
+plt.title('laptimes')
+plt.show()"""
+
+
+"""
+compounds =['SOFT', 'MEDIUM','HARD']
+laps =[25,35,15]
+plt.pie(laps,labels=compounds, autopct='%1.1f%%')    #pie chart
+plt.show()
+"""
+
+
+""" # histogram
+laptimes=[91.4, 91.8, 92.1, 91.5, 91.2,91.6, 92.3, 91.9, 92.5, 91.4]
+plt.hist(laptimes, bins= 12)
+plt.show()"""
+
+"""
+#shows multiple charts at once
+fig, axes = plt.subplots(2, 1, figsize=(8, 8) )
+axes[0].plot([1,2,3,4,5], [92,91,90,92,91])
+axes[0].set_title('laptimes')
+
+axes[1].bar(['VER', 'HAM'],[63,105])
+axes[1].set_title('wins')
+plt.tight_layout()
+plt.show()
+
+
+"""
+
+
+
+"""
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+axes[0].plot([1,2,3,4,5], [92,91,90,92,91], marker='o', color='red', label='VER')
+axes[0].plot([1,2,3,4,5],[93,92,92,91,90], marker='s',color='blue', label='HAM')
+axes[0].set_title('laptimes ')
+axes[0].set_xlabel('lap')
+axes[0].set_ylabel('times')
+axes[0].legend()
+axes[0].grid(True)
+axes[1].bar(['VER','HAM', 'LEC'], [63,105,8], color=['blue','red','red'])
+axes[1].set_title('wins total')
+axes[1].set_xlabel('driver')
+axes[1].set_ylabel(' wins')
+plt.tight_layout()
+plt.show()
+"""
+
+
+
+fig, ax =plt.subplots(figsize=(10,5))
+laps=[1,2,3,4,5,6,7,8,9,10]
+times= [92,91,90,95,98,96,92,91,90,89]
+ax.plot(laps, times, marker='d',color='black')
+ax.set_title('ver race pace')
+ax.set_xlabel('lap')
+ax.set_ylabel('time')
+
+ax.axvspan(4,6, alpha=0.99,color='pink', label='sc111') # alpha is opacity
+
+ax.annotate('fastest',xy=(10,89), xytext=(7,92),
+            arrowprops=dict(arrowstyle='->'))
+ax.legend()
+ax.grid(True)
+plt.show()
+plt
