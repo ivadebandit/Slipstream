@@ -623,7 +623,7 @@ plt.show()
 """
 
 
-
+"""
 fig, ax =plt.subplots(figsize=(10,5))
 laps=[1,2,3,4,5,6,7,8,9,10]
 times= [92,91,90,95,98,96,92,91,90,89]
@@ -639,4 +639,96 @@ ax.annotate('fastest',xy=(10,89), xytext=(7,92),
 ax.legend()
 ax.grid(True)
 plt.show()
-plt
+"""
+
+
+
+
+
+# plotly
+import plotly.express as px
+
+"""
+# line chart 
+laps = [1,2,3,4,5,6]
+times= [92.4,91.8,92.1,91.5, 91.2,91.6]
+fig =px.line(x=laps, y=times, title='laptimes')
+fig.show()
+"""
+
+"""
+
+#bar chart
+drivers=['VER', 'HAM', 'LEC','NOR']
+wins= [ 63,105,8,5]
+fig= px.bar(x=drivers, y=wins, title='wins')
+fig.show()
+"""
+
+
+
+"""
+#scatter plot
+
+laps =[1,2,3,4,5,6]
+laptimes= [92.4, 91.8, 90.3, 91.2, 92.1, 90.9]
+fig = px.scatter(x=laps,y=laptimes, title='laptimes')
+fig.show()"""
+
+
+
+
+import pandas as pd
+
+"""
+# two lines
+data ={
+    'lap': [1,2,3,4,5,6],
+    'ver': [91.3, 91.5, 91.4, 92.0, 92.1, 92.5],
+    'ham': [91.1, 91.3, 91.7, 91.9, 92.9, 92.4]  }
+df = pd.DataFrame(data)
+
+fig = px.line(df, x='lap', y=['ver', 'ham'], title='data')
+fig.show()"""
+
+
+
+"""
+laps = [1,2,3,4,5,6]
+times=[71.4, 71.9, 71.2, 71.6, 72.1, 71.9]
+"""
+
+"""
+fig = px.line(x=laps,y=times, title='laptimes', markers=True)
+fig.update_traces(line_color='pink', line_width=2.3)
+fig.show()"""
+
+
+"""
+#titles for both axes, rest is same
+fig = px.line(x=laps, y=times, title='laptimes')
+fig.update_xaxes(title_text='lap number')
+fig.update_yaxes(title_text='laptime')
+fig.show()
+"""
+
+
+
+data = {
+    'lap': [1,2,3,4,5,6, 1,2,3,4,5,6],
+    'time': [92.4, 91.8, 92.1, 91.5, 91.2, 91.6,  93.1, 92.5, 92.3, 92.0, 91.8, 91.5],
+    'driver': ['VER','HAM','VER','VER','VER','VER', 'HAM','HAM','HAM','HAM','HAM','HAM'] }
+df = pd.DataFrame(data)
+
+# fig = px.line(df, x='lap', y='time', color='driver',title= 'laptimes')
+
+# fig = px.line(df, x='lap', y='time', color='driver',
+ #             color_discrete_map= {'VER': 'blue', 'HAM':'yellow'} )
+
+# fig = px.line(df, x='lap', y='time', color='driver', template='ggplot2')
+
+fig = px.scatter(df, x='lap',y='time', color='driver',
+                 hover_data=['driver', 'time'])
+fig.show()
+
+
