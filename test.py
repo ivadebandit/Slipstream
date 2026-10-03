@@ -857,3 +857,11 @@ fig.show()
 
 
 
+from charts import fastestlap_chart
+
+
+"""
+session = get_session(2026, 'Bahrain', 'Q')
+drivers = ['VER', 'HAM', 'ALO', 'BOR']
+fig = fastestlap_chart(session, drivers)
+fig.show()"""

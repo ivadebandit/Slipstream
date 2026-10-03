@@ -1275,4 +1275,3 @@ def position_progress(session,driver):
             'lap': int(row['LapNumber']),
             'position':int(row['Position'])})
     return results
-    
