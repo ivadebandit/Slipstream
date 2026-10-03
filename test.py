@@ -713,7 +713,7 @@ fig.show()
 """
 
 
-
+"""
 data = {
     'lap': [1,2,3,4,5,6, 1,2,3,4,5,6],
     'time': [92.4, 91.8, 92.1, 91.5, 91.2, 91.6,  93.1, 92.5, 92.3, 92.0, 91.8, 91.5],
@@ -727,8 +727,133 @@ df = pd.DataFrame(data)
 
 # fig = px.line(df, x='lap', y='time', color='driver', template='ggplot2')
 
-fig = px.scatter(df, x='lap',y='time', color='driver',
+fig = px.scatter(df, x='lap',y='time', color='driver',  template='plotly_dark',
                  hover_data=['driver', 'time'])
 fig.show()
+
+"""
+
+
+
+
+# plotly graph objects 
+
+import plotly.graph_objects as go
+
+
+"""
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=[1,2,3], y=[92,91,90], mode='lines+markers', name='VER'))
+fig.add_trace(go.Scatter(x=[1,2,3],y=[90,92,92], mode='lines+markers', name='ham'))
+fig.update_layout(title='laptimes', xaxis_title='laps', yaxis_title='seconds')
+fig.show()"""
+
+"""
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=[1,2,3,4,5],
+    y=[92,91,90,92,91],
+    mode='lines+markers',
+    name='ver',
+    line=dict(color='blue',width=3) ))
+fig.add_trace(go.Scatter(
+    x=[1,2,3,4,5],
+    y=[92,93,91,92,91],
+    mode='lines+markers',
+    name='ham',
+    line=dict(color='red', width=2.5)))
+fig.update_layout(
+    title='lap times',
+    xaxis_title='lap',
+    yaxis_title='time',
+    template='plotly_dark')
+fig.show()
+#  is more precise for detailed stuff and such
+"""
+
+
+
+
+
+
+"""fig = go.Figure()
+fig.add_trace(go.Scatter(
+    x=[1,2,3,4,5],
+    y=[92,91,91,92,90],
+    mode='lines+markers',
+    name='lap time',
+    line=dict(color='blue')))
+fig.add_trace(go.Bar(
+    x=[1,2,3,4,5],
+    y=[3,2,5,14,8],
+    name='position',
+    marker_color='orange',
+    yaxis='y2' ))
+fig.update_layout(
+    title='laptime and position',
+    xaxis_title='lap',
+    yaxis=dict(title='time', side='left'),
+    yaxis2=dict(title='position',  overlaying='y', side='right'),
+    template='plotly_dark')
+fig.show()
+
+"""
+
+
+import plotly.graph_objects as go
+
+
+
+"""
+fig =go.Figure()
+fig.add_trace(go.Scatter(
+    x=[1,2,3,4,5,6,7,8,9,10],
+    y=[92,91,90,95,96,97,91,92,92,91,92],
+    mode='lines+markers',
+    name='lap times',
+    line=dict(color='white')))
+fig.add_vrect(
+    x0=4, x1=6,
+    fillcolor='red', opacity=0.2,
+    layer='below', line_width=0,
+    annotation_text='sc', annotation_position='bottom left')
+fig.update_layout(
+    title='race pace ver',
+    xaxis_title='lap',
+    yaxis_title='time',
+    template='plotly_dark')
+fig.show()"""
+
+
+
+
+
+
+
+from plotly.subplots import make_subplots
+
+
+"""
+fig = make_subplots(rows=2,cols=1)
+fig.add_trace(go.Scatter(x=[1,2,3], y=[88,87,89], name='time'),row=1, col=1)
+fig.add_trace(go.Bar(x=['ver','ham'], y=[63,105], name='wins'), row=2, col=1)
+fig.show() # again two charts together"""
+
+
+
+"""
+fig = make_subplots(rows=2, cols=2, subplot_titles=('lap times', 'wins'))
+fig.add_trace(
+    go.Scatter(x=[1,2,33,4,5, 0.5], y=[90,91,99,92,91], mode='lines+markers', name='ver'),
+    row=1,col=1 )
+fig.add_trace(
+    go.Bar(x=['ver', 'alo', 'lin'], y=[63,32,1], name='wins'),
+    row=2, col=1 )
+fig.update_layout(template='plotly_dark', height = 610)
+fig.show()
+"""
+
 
 
