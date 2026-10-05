@@ -29,12 +29,13 @@ def fastest_lap(session,driver): # for a specific driver
 
     return fastest
 
-
+"""
 def fastestoverall(session):
     laps = session.laps
     laps['LapTime'] = laps['LapTime'].dt.total_seconds()
     fastest = laps['LapTime'].min()
     return fastest
+"""
 
 def get_consistency(session, driver):
     laps =clean_laps(session,driver)

@@ -865,3 +865,13 @@ session = get_session(2026, 'Bahrain', 'Q')
 drivers = ['VER', 'HAM', 'ALO', 'BOR']
 fig = fastestlap_chart(session, drivers)
 fig.show()"""
+
+
+
+
+"""
+from charts import fastestoverall_chart
+
+max = get_session(2025, 'Suzuka', 'Q')
+fig = fastestoverall_chart(max)
+fig.show()"""
