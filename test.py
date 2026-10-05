@@ -875,3 +875,17 @@ from charts import fastestoverall_chart
 max = get_session(2025, 'Suzuka', 'Q')
 fig = fastestoverall_chart(max)
 fig.show()"""
+
+
+
+
+
+
+
+
+
+"""
+from charts import consistency_chart
+session = get_session(2025, 'Mexico', 'R')
+chart = consistency_chart(session, 'ALO')
+chart.show()"""

@@ -37,3 +37,56 @@ def fastestoverall_chart(session):
     fig.add_trace(go.Bar(x=sectors, y=best, name='theoretical best'))
     fig.add_trace(go.Bar(x=sectors,y=actual,name='actual best'))
     fig.show()
+
+
+
+
+
+
+def consistency_chart(session, driver):
+
+    laps=session.laps
+    filter = laps[laps['Driver']==driver]
+    filter=filter[filter['IsAccurate']==True]
+    filter=filter[filter['Deleted']==False]
+    filter=filter[filter['TrackStatus']=='1']
+    filter=filter[filter['LapTime'].notna()]
+
+    filter = filter.copy()
+    filter['seconds'] = filter['LapTime'].dt.total_seconds()
+
+    lapnumbers = filter['LapNumber'].tolist()
+    laptimes = filter['seconds'].tolist()
+    mean = sum(laptimes) / len(laptimes)
+    std = filter['seconds'].std()
+    
+
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x = lapnumbers,
+        y = laptimes,
+        mode='lines+markers',
+        line=dict(color='pink') ))
+    fig.add_hrect(
+        y0= mean - std,
+        y1 = mean +std,
+        fillcolor='blue',
+        opacity=0.33,
+        line_width = 0 )
+        #annotation_text = '+- 1 std',
+        #annotation_position = 'top left' )
+   
+    fig.add_hline(
+        y=mean,
+        line_dash= 'dash',
+        line_color = 'red'
+    )
+
+    fig.update_layout(
+        title= f'{driver} consistency',
+        
+        xaxis_title = 'lap',
+        yaxis_title = 'laptime',
+        template='plotly_dark')
+    return fig
