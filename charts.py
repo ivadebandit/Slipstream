@@ -90,3 +90,45 @@ def consistency_chart(session, driver):
         yaxis_title = 'laptime',
         template='plotly_dark')
     return fig
+
+
+
+
+
+
+
+from analyzedata import quali_progress
+
+def qualiprog_chart(session, driver):
+
+
+    data = quali_progress(session, driver)
+    parts = []
+    times = []
+
+    if data['q1'] is not None:
+        parts.append('Q1')
+        times.append(data['q1'])
+    if data['q2'] is not None:
+        parts.append('Q2')
+        times.append(data['q2'])
+    if data['q3'] is not None:
+        parts.append('Q3')
+        times.append(data['q3'])
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=parts,
+        y=times,
+        mode = 'lines + markers',
+        marker= dict(size = 12 ),
+        line = dict(color='cyan', width = 3),
+        name=driver ))
+
+
+    fig.update_layout(
+        title=f'{driver} quali progress ',
+        xaxis_title = 'qualifying session',
+        yaxis_title = 'lap times',
+        template = 'plotly_dark' )
+    return fig

@@ -889,3 +889,12 @@ from charts import consistency_chart
 session = get_session(2025, 'Mexico', 'R')
 chart = consistency_chart(session, 'ALO')
 chart.show()"""
+
+
+
+"""
+from charts import qualiprog_chart
+
+session = get_session(2025, 'Las Vegas', 'Q')
+chart=qualiprog_chart(session, 'VER')
+chart.show()"""
