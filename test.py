@@ -898,3 +898,9 @@ from charts import qualiprog_chart
 session = get_session(2025, 'Las Vegas', 'Q')
 chart=qualiprog_chart(session, 'VER')
 chart.show()"""
+
+
+"""
+from charts import chart_qualipositions
+fig = chart_qualipositions('VER', 'Abu Dhabi', [2022,2023,2024,2025,2026])
+fig.show()"""

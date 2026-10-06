@@ -132,3 +132,33 @@ def qualiprog_chart(session, driver):
         yaxis_title = 'lap times',
         template = 'plotly_dark' )
     return fig
+
+
+
+from analyzedata import qualipositions 
+
+
+def chart_qualipositions(driver, circuit, years):
+    data = qualipositions(driver, circuit, years)
+    
+    yearslist = list(data.keys())
+    positions = list(data.values())
+    
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=yearslist,
+        y=positions,
+        mode = 'lines+markers',
+        marker = dict(size=14),
+        name=driver ))
+
+    fig.update_yaxes(autorange = 'reversed', title_text='position', dtick=1)
+    fig.update_xaxes(title_text = 'year', dtick=1)
+    fig.update_layout(
+        title= f'{driver} quali results at {circuit}',
+        template= 'plotly_dark' )
+    return fig
+
+
+
+
