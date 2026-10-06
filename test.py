@@ -904,3 +904,10 @@ chart.show()"""
 from charts import chart_qualipositions
 fig = chart_qualipositions('VER', 'Abu Dhabi', [2022,2023,2024,2025,2026])
 fig.show()"""
+
+
+
+"""
+from charts import racepositions_chart
+fig = racepositions_chart('VER', 'Netherlands', [2021,2022,2023,2024,2025,2026])
+fig.show()"""

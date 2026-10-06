@@ -162,3 +162,28 @@ def chart_qualipositions(driver, circuit, years):
 
 
 
+def racepositions_chart(driver, circuit,years):
+    from analyzedata import racepositions
+
+    data = racepositions(driver, circuit,years)
+    races = list(data.keys())
+    positions=list(data.values())
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=races,
+        y=positions,
+        mode='lines+markers',
+        marker=dict(size=13),
+        name=driver ))
+
+    fig.update_yaxes(autorange= 'reversed', title_text='Position', dtick=1)
+    fig.update_xaxes(title_text='Year', dtick=1)
+    fig.update_layout(
+        title=f'{driver} race results at {circuit}',
+        template='plotly_dark' )
+    return fig
+
+
+
+
