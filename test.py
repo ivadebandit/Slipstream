@@ -897,8 +897,8 @@ from charts import qualiprog_chart
 
 session = get_session(2025, 'Las Vegas', 'Q')
 chart=qualiprog_chart(session, 'VER')
-chart.show()"""
-
+chart.show()
+"""
 
 """
 from charts import chart_qualipositions
@@ -910,4 +910,12 @@ fig.show()"""
 """
 from charts import racepositions_chart
 fig = racepositions_chart('VER', 'Netherlands', [2021,2022,2023,2024,2025,2026])
+fig.show()"""
+
+
+
+"""
+from charts import bestlapsq_chart
+
+fig =bestlapsq_chart('VER', 'Brazil', [2021,2022,2023,2024,2025])
 fig.show()"""

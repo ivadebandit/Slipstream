@@ -6,8 +6,7 @@ def clean_laps(session, driver):
     driver_laps = driver_laps[driver_laps['IsAccurate'] == True]
     driver_laps = driver_laps[driver_laps['TrackStatus'] == '1' ]
     driver_laps = driver_laps[driver_laps['Deleted'] ==False]
-
-
+# helper function no chart
 
     driver_laps = driver_laps.dropna(subset=['LapTime'])
 
@@ -15,11 +14,16 @@ def clean_laps(session, driver):
     return driver_laps
 
 
+
+
+
 def raceresult(session):
     results = session.results
     sort = results.sort_values('Points', ascending=False)
-
+# no chart because not enough data
     return sort[['Abbreviation', 'TeamName', 'Position', 'Points', 'Status']]
+
+
 
 
 def fastest_lap(session,driver): # for a specific driver
@@ -28,6 +32,9 @@ def fastest_lap(session,driver): # for a specific driver
     fastest = laps.min()
 
     return fastest
+# chart done
+
+
 
 """
 def fastestoverall(session):
@@ -36,11 +43,17 @@ def fastestoverall(session):
     fastest = laps['LapTime'].min()
     return fastest
 """
+# chart done but from slightly more advanced function i wrote afterwards
+
+
 
 def get_consistency(session, driver):
     laps =clean_laps(session,driver)
     result = laps.std()
     return round(result, 3)
+# chart done 
+
+
 #boxbox gone should readd at some point later
 
 

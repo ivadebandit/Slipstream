@@ -186,4 +186,29 @@ def racepositions_chart(driver, circuit,years):
 
 
 
+def bestlapsq_chart(driver,circuit,years):
 
+    from analyzedata import bestlaps_quali
+    data = bestlaps_quali(driver, circuit,years)
+
+    yearss = list(data.keys())
+    times = list(data.values())
+
+    fig= go.Figure()
+    fig.add_trace(go.Scatter(
+        x=yearss,
+        y=times,
+        mode='lines+markers',
+        marker=dict(size=12),
+        name=driver))
+    
+    
+    fig.update_xaxes(title_text='year', dtick=1)
+    
+    fig.update_yaxes(title_text='laptime')
+    fig.update_layout(
+        title= f'{driver} best quali laps at {circuit}',
+        template= 'plotly_dark')
+
+    fig.show()
+    
