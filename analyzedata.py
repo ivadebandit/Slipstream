@@ -181,6 +181,16 @@ def driverstandings(year, races):
 
 
             results[driver] = results.get(driver, 0) + points
+
+        try: 
+            sprint= get_session(year, race,'S')
+            sprintres= sprint.results
+            for _, row in sprintres.itettows():
+                driver =row['Abbreviation']
+                points=row['Points']
+                results[driver]= results.get(driver,0) + points
+        except:
+            pass
     return results
 
 
