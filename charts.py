@@ -230,4 +230,24 @@ def fastestalltime_chart(circuits, years):
     fig.update_xaxes(title_text='circuit')
     fig.update_yaxes(title_text='fastest lap')
     return fig
-    
+
+
+
+
+def driverstandings_chart(year, races):
+    from analyzedata import driverstandings
+    data= driverstandings(year,races)
+
+    standings = sorted(data.items(), key=lambda x:x[1], reverse=True)
+    top10 = standings[:10]
+
+    drivers=[]
+    points=[]
+    for driver, pointss in top10:
+        drivers.append(driver)
+        points.append(pointss)
+    fig=px.bar(x=drivers, y=points, title='driver standings (top 10)')
+    fig.update_xaxes(title_text='Driver')
+    fig.update_yaxes(title_text='points')
+
+    return fig

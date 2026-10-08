@@ -928,3 +928,17 @@ fig.show()"""
 from charts import fastestalltime_chart
 fig = fastestalltime_chart(['Silverstone', 'Belgium','Imola'], [2021, 2022, 2023, 2024, 2025])
 fig.show()"""
+
+
+
+
+"""
+from charts import driverstandings_chart
+
+chart =driverstandings_chart(2025, ['Bahrain', 'Baku','Madrid', 'Monza',])
+chart.show()
+"""
+
+"""
+session = get_session(2026,'Bahrain','R')
+print(session.results['Abbreviation'].unique())"""
