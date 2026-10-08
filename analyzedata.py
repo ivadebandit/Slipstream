@@ -230,6 +230,7 @@ def totalpoints(year, races):
 
 
 
+
 def teamstandings(year, races):
 
     results = {}
@@ -244,7 +245,23 @@ def teamstandings(year, races):
             points = row['Points']
             results[team] = results.get(team, 0) +points
 
+        try:
+            sprint = get_session(year,race,'S')
+            sprintresults= sprint.results
+
+            for _, row in sprintresults.iterrows():
+                team= row['TeamName']
+                points = row['Points']
+                results[team]=results.get(team,0) +points
+        except:
+            pass
+
     return results
+
+
+
+
+
 
 def teamsprints(year, races):
     results = {}
