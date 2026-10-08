@@ -211,4 +211,23 @@ def bestlapsq_chart(driver,circuit,years):
         template= 'plotly_dark')
 
     fig.show()
+
+
+
+def fastestalltime_chart(circuits, years):
+
+    from analyzedata import fastest_all_time
+
+    times =[]
+    names=[]
+
+    for i in circuits:    
+        data = fastest_all_time(i,years)
+
+        names.append(i)
+        times.append(data['time'])
+    fig= px.bar(x=names,y=times, title='fastest lap all time')
+    fig.update_xaxes(title_text='circuit')
+    fig.update_yaxes(title_text='fastest lap')
+    return fig
     

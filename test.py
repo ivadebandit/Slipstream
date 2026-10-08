@@ -919,3 +919,12 @@ from charts import bestlapsq_chart
 
 fig =bestlapsq_chart('VER', 'Brazil', [2021,2022,2023,2024,2025])
 fig.show()"""
+
+
+
+
+
+"""
+from charts import fastestalltime_chart
+fig = fastestalltime_chart(['Silverstone', 'Belgium','Imola'], [2021, 2022, 2023, 2024, 2025])
+fig.show()"""
