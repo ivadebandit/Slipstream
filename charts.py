@@ -251,3 +251,23 @@ def driverstandings_chart(year, races):
     fig.update_yaxes(title_text='points')
 
     return fig
+
+
+
+
+def teamstandings_chart(year,races):
+
+    from analyzedata import teamstandings
+    data=teamstandings(year,races)
+
+    standings=sorted(data.items(),key=lambda x: x[1], reverse=True)
+    teams=[]
+    points=[]
+    for team, pts in standings:
+        teams.append(team)
+        points.append(pts)
+
+    fig= px.bar(x=teams, y=points, title='constructor standings')
+    fig.update_xaxes(title_text='team')
+    fig.update_yaxes(title_text='points')
+    return fig

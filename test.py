@@ -935,10 +935,21 @@ fig.show()"""
 """
 from charts import driverstandings_chart
 
-chart =driverstandings_chart(2025, ['Bahrain', 'Baku','Madrid', 'Monza',])
+chart =driverstandings_chart(2026, ['Bahrain', 'Baku','Madrid', 'Monza', 'Netherlands',])
 chart.show()
 """
 
 """
 session = get_session(2026,'Bahrain','R')
 print(session.results['Abbreviation'].unique())"""
+
+
+
+
+
+
+
+"""
+from charts import teamstandings_chart
+fig=teamstandings_chart(2025, ['Bahrain', 'Baku','Madrid', 'Monza', 'Netherlands',])
+fig.show()"""
