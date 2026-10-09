@@ -271,3 +271,29 @@ def teamstandings_chart(year,races):
     fig.update_xaxes(title_text='team')
     fig.update_yaxes(title_text='points')
     return fig
+
+
+
+
+
+
+def boxboxchart(session):
+    from analyzedata import boxbox
+    data=boxbox(session)
+
+
+    drivers=[]
+    length=[]
+    laps=[]
+
+    for box in data:
+        drivers.append(box['driver'])
+        length.append(round(box['duration'],2))
+        laps.append(box['lap'])
+
+
+    fig=px.bar(x=drivers, y=length, title='pitstop durations')
+    fig.update_xaxes(title_text='driver')
+    fig.update_yaxes(title_text='duration')
+
+    return fig

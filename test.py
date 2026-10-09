@@ -953,3 +953,15 @@ print(session.results['Abbreviation'].unique())"""
 from charts import teamstandings_chart
 fig=teamstandings_chart(2025, ['Bahrain', 'Baku','Madrid', 'Monza', 'Netherlands',])
 fig.show()"""
+
+
+
+
+
+
+
+"""
+from charts import boxboxchart
+session= get_session(2026, 'Bahrain','R')
+fig=boxboxchart(session)
+fig.show()"""
