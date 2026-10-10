@@ -965,3 +965,12 @@ from charts import boxboxchart
 session= get_session(2026, 'Bahrain','R')
 fig=boxboxchart(session)
 fig.show()"""
+
+
+
+"""
+from charts import racepace_chart
+
+session= get_session(2026,'Bahrain', 'R')
+fig = racepace_chart(session, 'PER')
+fig.show()"""

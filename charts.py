@@ -297,3 +297,18 @@ def boxboxchart(session):
     fig.update_yaxes(title_text='duration')
 
     return fig
+
+
+
+from analyzedata import racepace
+
+def racepace_chart(session,driver):
+    data= racepace(session,driver)
+
+    stints =list(data.keys())
+    laptimes=list(data.values())
+    fig =px.bar(x=stints, y=laptimes,title=f'{driver} race pace')
+    fig.update_xaxes(title_text='stint', dtick=1)
+    fig.update_yaxes(title_text='average laptime',template= 'plotly_dark')
+    return fig
+    
