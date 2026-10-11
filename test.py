@@ -974,3 +974,20 @@ from charts import racepace_chart
 session= get_session(2026,'Bahrain', 'R')
 fig = racepace_chart(session, 'PER')
 fig.show()"""
+
+
+
+"""
+from charts import tiredeg_chart
+session = get_session(2022, 'Mexico', 'R')
+fig = tiredeg_chart(session, 'VER')
+fig.show()
+"""
+
+"""
+from analyzedata import stintsum
+session = get_session(2026, 'Singapore', 'R')
+laps = stintsum(session,'VER')
+for lap in laps:
+    print(lap)
+    """

@@ -311,4 +311,28 @@ def racepace_chart(session,driver):
     fig.update_xaxes(title_text='stint', dtick=1)
     fig.update_yaxes(title_text='average laptime',template= 'plotly_dark')
     return fig
-    
+
+
+
+
+
+
+def tiredeg_chart(session,driver):
+    from analyzedata import tiredeg
+
+    data=tiredeg(session,driver)
+
+    stints=[]
+    degs=[]
+    compounds=[]
+
+
+    for stint in data:
+        stints.append(stint['stint'])
+        degs.append(stint['deg'])
+        compounds.append(stint['compound'])
+
+    fig=px.bar(x=stints, y=degs,title=f'{driver} tire degradation per stint')
+    fig.update_xaxes(title_text='stint', dtick=1)
+    fig.update_yaxes(title_text='degradation')
+    return fig
