@@ -358,3 +358,33 @@ def teammategappace_chart(session,d1,d2):
         yaxis_title='pace',
         template='plotly_dark' )
     return fig
+
+
+
+
+
+def trackevo_chart(session):
+    from analyzedata import trackevo
+    data=  trackevo(session)
+
+    laps=[]
+    bests=[]
+    times=[]
+
+    for d in data:
+        laps.append(d['lap'])
+        times.append(d['time'])
+        bests.append(d['best'])
+
+    fig=go.Figure()
+    #fig.add_trace(go.Scatter(x=laps,y=times, mode='markers',name='laptime', line=dict(
+     #   color='gray',width=1)))
+    fig.add_trace(go.Scatter(x=laps,y=bests,mode='markers',name='session best',line=dict(
+        color='red', width=1.7)))
+    fig.update_layout(
+        title='track evolution',
+        xaxis_title='lap',
+        yaxis_title='lap time',
+        template='plotly_dark')
+
+    return fig

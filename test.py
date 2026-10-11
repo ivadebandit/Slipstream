@@ -1001,3 +1001,10 @@ session = get_session(2026, 'Singapore', 'R')
 fig=teammategappace_chart (session, 'BOT', 'PER')
 fig.show()
 """
+
+
+"""
+from charts import trackevo_chart
+session = get_session(2026, 'Singapore', 'Q')
+fig=trackevo_chart(session)
+fig.show()"""
