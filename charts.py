@@ -336,3 +336,25 @@ def tiredeg_chart(session,driver):
     fig.update_xaxes(title_text='stint', dtick=1)
     fig.update_yaxes(title_text='degradation')
     return fig
+
+
+
+
+
+
+def teammategappace_chart(session,d1,d2):
+    from analyzedata import teammategap_pace
+    data= teammategap_pace(session,d1,d2)
+    drivers = [d1,d2]
+
+    paces = [data['pace1'],data['pace2']]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=drivers,y=paces, name ='avg pace'))
+
+    fig.update_layout(
+        title='pace diff between two drivers',
+        xaxis_title='driver',
+        yaxis_title='pace',
+        template='plotly_dark' )
+    return fig

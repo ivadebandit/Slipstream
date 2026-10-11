@@ -991,3 +991,13 @@ laps = stintsum(session,'VER')
 for lap in laps:
     print(lap)
     """
+
+
+
+
+"""
+from charts import teammategappace_chart
+session = get_session(2026, 'Singapore', 'R')
+fig=teammategappace_chart (session, 'BOT', 'PER')
+fig.show()
+"""
