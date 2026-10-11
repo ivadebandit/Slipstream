@@ -359,18 +359,31 @@ def tiredeg(session,driver):
     laps = session.laps
 
     driverlaps = laps[laps['Driver']==driver]
+    driverlaps = driverlaps[driverlaps['TrackStatus']=='1']
+    driverlaps=driverlaps[driverlaps['IsAccurate']==True]
+    driverlaps=driverlaps[driverlaps['Deleted']==False]
+    driverlaps=driverlaps[driverlaps['PitInTime'].isna()]
+    driverlaps=driverlaps[driverlaps['PitOutTime'].isna()]
     driverlaps = driverlaps[driverlaps['LapTime'].notna()]
     driverlaps= driverlaps[driverlaps['TyreLife'].notna()]
+    
     results = []
-
-
 
     for stint in driverlaps['Stint'].unique():
         stint_laps = driverlaps[driverlaps['Stint']== stint]
-
+        stint_laps=stint_laps[stint_laps['TyreLife'] > 1]
 
         if len(stint_laps) < 5:
             continue
+
+
+        lap_times=stint_laps['LapTime'].dt.total_seconds()
+        median= lap_times.median()
+        stint_laps =stint_laps[lap_times <= median +3]
+        if len(stint_laps) < 5:
+            continue
+        
+
         laptimes = []
 
         for _, row in stint_laps.iterrows():
