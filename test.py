@@ -1014,3 +1014,10 @@ from charts import drszones_chart
 session = get_session(2025, 'Singapore','Q')
 fig=drszones_chart(session, 'VER')
 fig.show()"""
+
+
+
+"""
+from charts import h2h_chart
+fig= h2h_chart(['Brazil', 'Abu Dhabi', 'Suzuka'],'VER', 'HAM',[2021,2022,2023,2024,2025,2026])
+fig.show()"""

@@ -426,3 +426,28 @@ def drszones_chart(session,driver):
     return fig
 
 #  check for 2026 in docs!!
+
+
+
+def h2h_chart(races, d1,d2, years):
+    from analyzedata import h2h
+    data =h2h(d1,d2, races,years)
+    circuits = list(data.keys())
+
+    d1wins=[]
+    d2wins=[]
+
+    for circuit in circuits: 
+        d1wins.append(data[circuit]['d1_wins'])
+        d2wins.append(data[circuit]['d2_wins'])
+
+    fig=go.Figure()
+    fig.add_trace(go.Bar(x=circuits, y=d1wins,name=d1))
+    fig.add_trace(go.Bar(x=circuits,y=d2wins,name=d2))
+    fig.update_layout(
+        title=f'{d1} vs {d2} h2h',
+        xaxis_title='circuit',
+        yaxis_title='qualifying wins',
+        barmode='group',
+        template='plotly_dark')
+    return fig
