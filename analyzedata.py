@@ -487,7 +487,9 @@ def drs_zones(session,driver):
             zones.append({
                 'start': round(distance_start, 1),
                 'end': round(end_distance,1) })
-    return zones
+    return {
+        'zones': zones,
+        'telemetry': telemetry }
 
 
 

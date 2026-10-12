@@ -388,3 +388,41 @@ def trackevo_chart(session):
         template='plotly_dark')
 
     return fig
+
+
+
+
+def drszones_chart(session,driver):
+
+    from analyzedata import drs_zones
+    data=drs_zones(session,driver)
+
+    telemetry=data['telemetry']
+    zones=data['zones']
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(
+        x=telemetry['Distance'],
+        y=telemetry['Speed'],
+        mode='lines',
+        name='speed',
+        line=dict(color='white', width=2)))
+
+    for zone in zones:
+
+        fig.add_vrect(
+            x0=zone['start'],
+            x1=zone['end'],
+            fillcolor='lightgreen',
+            opacity=0.4,
+            line_width=0)
+
+    fig.update_layout(
+        title=f'{driver} drs zones on speed trace',
+        xaxis_title='distance',
+        yaxis_title= 'speed',
+        template='plotly_dark')
+    return fig
+
+#  check for 2026 in docs!!

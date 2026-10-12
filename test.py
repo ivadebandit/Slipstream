@@ -1008,3 +1008,9 @@ from charts import trackevo_chart
 session = get_session(2026, 'Singapore', 'Q')
 fig=trackevo_chart(session)
 fig.show()"""
+"""
+
+from charts import drszones_chart
+session = get_session(2025, 'Singapore','Q')
+fig=drszones_chart(session, 'VER')
+fig.show()"""
