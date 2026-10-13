@@ -451,3 +451,34 @@ def h2h_chart(races, d1,d2, years):
         barmode='group',
         template='plotly_dark')
     return fig
+
+
+
+
+def wetdrycomp_chart(races,drivers):
+    from analyzedata import wetdrycomp
+
+    data=wetdrycomp(races,drivers)
+    drivers2 = []
+    wetpos =[]
+    drypos=[]
+
+    for driver in drivers:
+        if driver in data:
+            drivers2.append(driver)
+            wetpos.append(data[driver]['wet'])
+            drypos.append(data[driver]['dry'])
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=drivers2,y=wetpos, name='wet'))
+    fig.add_trace(go.Bar(x=drivers2,y=drypos,name='dry'))
+
+    fig.update_layout(
+        title='wet  vs dry performance',
+        xaxis_title='driver',
+        yaxis_title='avg position',
+        barmode='group',
+        template='plotly_dark')
+
+    fig.update_yaxes(autorange= 'reversed', dtick=1)
+    return fig

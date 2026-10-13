@@ -1008,16 +1008,27 @@ from charts import trackevo_chart
 session = get_session(2026, 'Singapore', 'Q')
 fig=trackevo_chart(session)
 fig.show()"""
-"""
 
+"""
 from charts import drszones_chart
 session = get_session(2025, 'Singapore','Q')
 fig=drszones_chart(session, 'VER')
-fig.show()"""
-
+fig.show()
+"""
 
 
 """
 from charts import h2h_chart
 fig= h2h_chart(['Brazil', 'Abu Dhabi', 'Suzuka'],'VER', 'HAM',[2021,2022,2023,2024,2025,2026])
+fig.show()"""
+
+
+"""
+from charts import wetdrycomp_chart
+sessions=[
+    get_session(2024,'Brazil','R'),
+    get_session(2026, 'Singapore','S'),
+    get_session(2026, 'Singapore', 'R'),
+    get_session(2026, 'Austria', 'R')]
+fig= wetdrycomp_chart(sessions, ['VER', 'HAM','NOR','RUS','ALO'])
 fig.show()"""
