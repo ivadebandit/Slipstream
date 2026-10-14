@@ -482,3 +482,32 @@ def wetdrycomp_chart(races,drivers):
 
     fig.update_yaxes(autorange= 'reversed', dtick=1)
     return fig
+
+
+
+
+
+def teammategapquali_chart(d1,d2,races,years):
+    from analyzedata import teammategap_quali
+    data=teammategap_quali(d1,d2,races,years)
+
+    circuits=[]
+    gaps=[]
+    colors=[]
+    for entry in data:
+        circuits.append(f"{entry['event']} {entry['year']}")
+        gaps.append(entry['gap'])
+
+        if entry['faster'] == d1:
+            colors.append('blue')
+        else:
+            colors.append('red')
+
+    fig=go.Figure()
+    fig.add_trace(go.Bar(x=circuits,y=gaps, name='quali gap', marker=dict(color=colors)))
+    fig.update_layout(
+        title=f'{d1} (blue) vs {d2} (red) quali difference',
+        xaxis_title='race',
+        yaxis_title='gap',
+        template='plotly_dark')
+    return fig

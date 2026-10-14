@@ -1032,3 +1032,9 @@ sessions=[
     get_session(2026, 'Austria', 'R')]
 fig= wetdrycomp_chart(sessions, ['VER', 'HAM','NOR','RUS','ALO'])
 fig.show()"""
+
+
+"""
+from charts import teammategapquali_chart
+fig = teammategapquali_chart('HAM','LEC', ['Monaco','Singapore'], [2025,2026])
+fig.show()"""
