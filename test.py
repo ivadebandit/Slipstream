@@ -1047,3 +1047,65 @@ fig.show()"""
 from charts import championshipbattle_chart
 fig=championshipbattle_chart(2026,['Australia','China','Suzuka','Miami','Canada','Monaco','Barcelona','Austria','Silverstone','Spa','Hungary','Zandvoort','Monza','Madrid','Baku','Bahrain','Singapore'])
 fig.show()"""
+
+
+
+
+
+"""
+
+from charts import delta_chart
+from analyzedata import delta
+session = get_session(2026, 'Singapore','Q')
+data = delta('VER','HAM', session)
+print(data[-1])
+
+fig =delta_chart('VER', 'HAM', session)
+fig.show()
+
+"""
+
+
+
+
+
+
+"""
+
+fig= delta_chart('VER','HAM', session)
+fig.show()
+fig
+"""
+
+"""
+session = get_session(2026, 'Singapore', 'Q')
+ver =session.laps[session.laps['Driver']== 'VER'].pick_fastest()
+ham =session.laps[session.laps['Driver'] == 'HAM'].pick_fastest()
+
+vertel =ver.get_telemetry()
+hamtel =ham.get_telemetry()
+"""
+
+
+"""
+print("ver seconds[0]:", vertel['Time'].dt.total_seconds().iloc[0])
+print("ver seconds[-1]:", vertel['Time'].dt.total_seconds().iloc[-1])
+print("ham seconds[0]:", hamtel['Time'].dt.total_seconds().iloc[0])
+print("ham seconds[-1]:", hamtel['Time'].dt.total_seconds().iloc[-1])
+print("diff at start:", vertel['Time'].dt.total_seconds().iloc[0] - hamtel['Time'].dt.total_seconds().iloc[0])
+"""
+
+"""
+print("ver distance monotonic:", vertel['Distance'].is_monotonic_increasing)
+print("ham distance monotonic:", hamtel['Distance'].is_monotonic_increasing)
+print("ver max dist:", vertel['Distance'].max())
+print("ham max dist:", hamtel['Distance'].max())
+"""
+
+
+"""
+from analyzedata import delta
+session = get_session(2026, 'Singapore', 'Q')
+
+data = delta('VER','HAM', session)
+print(data[-5:]) """

@@ -542,3 +542,34 @@ def championshipbattle_chart(year,races):
         template='plotly_dark')
         #height=600 )
     return fig
+
+
+
+def delta_chart(d1,d2,session):
+    
+    from analyzedata import delta
+    data=delta(d1,d2,session)
+
+    pcts=[]
+    deltas=[]
+
+    for entry in data:
+        pcts.append(entry['distance'])
+        deltas.append(entry['delta'])
+
+    fig=go.Figure()
+    fig.add_trace(go.Scatter(
+        x=pcts,
+        y=deltas,
+        mode='lines',
+        name=f'{d1} vs {d2}',
+        line=dict(color='cyan', width=2)))
+    fig.add_hline(y=0, line_dash='dash', line_color='white')
+
+
+    fig.update_layout(
+        title=f'{d1} vs {d2} delta',
+        xaxis_title='lap %',
+        yaxis_title=f'delta, negative = {d1} ahead',
+        template='plotly_dark')
+    return fig
