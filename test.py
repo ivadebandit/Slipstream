@@ -1038,3 +1038,12 @@ fig.show()"""
 from charts import teammategapquali_chart
 fig = teammategapquali_chart('HAM','LEC', ['Monaco','Singapore'], [2025,2026])
 fig.show()"""
+
+
+
+
+"""
+# not committed !!!!!!
+from charts import championshipbattle_chart
+fig=championshipbattle_chart(2026,['Australia','China','Suzuka','Miami','Canada','Monaco','Barcelona','Austria','Silverstone','Spa','Hungary','Zandvoort','Monza','Madrid','Baku','Bahrain','Singapore'])
+fig.show()"""

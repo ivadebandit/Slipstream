@@ -511,3 +511,34 @@ def teammategapquali_chart(d1,d2,races,years):
         yaxis_title='gap',
         template='plotly_dark')
     return fig
+
+
+
+
+
+def championshipbattle_chart(year,races):
+    from analyzedata import championship_battle
+    data = championship_battle(year,races)
+
+    drivers = list(data[0]['scores'].keys())
+    fig=go.Figure()
+
+    for driver in drivers:
+        points=[]
+        for entry in data:
+            points.append(entry['scores'][driver])
+        fig.add_trace(go.Scatter(
+
+            x=races,
+            y=points,
+            mode='lines+markers',
+            name=driver,
+            marker=dict(size=6),
+            line=dict(width=2)))
+    fig.update_layout(
+        title=f'{year} drivers standings',
+        xaxis_title='race',
+        yaxis_title='points',
+        template='plotly_dark')
+        #height=600 )
+    return fig
