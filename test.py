@@ -1124,3 +1124,11 @@ session =get_session(2026, 'Singapore', 'Q')
 fig=perfectlap_chart(session,'VER')
 fig.show()
 """
+
+
+
+"""
+from charts import lap1start_chart
+session  = get_session(2024,'Brazil','R')
+fig=lap1start_chart(session)
+fig.show()"""

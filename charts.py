@@ -599,3 +599,37 @@ def perfectlap_chart(session,driver):
         template='plotly_dark')
     
     return fig
+
+
+
+
+
+
+
+def lap1start_chart(session):
+
+    from analyzedata import lap1start
+    data=lap1start(session)
+
+    sortedd = sorted(data, key=lambda x: x['change'], reverse=True)
+    drivers=[]
+    changes=[]
+    colors=[]
+
+    for entry in sortedd:
+        drivers.append(entry['driver'])
+        changes.append(entry['change'])
+
+        if entry['change'] >=0:
+            colors.append('lightgreen')
+        else:
+            colors.append('red')
+
+    fig=go.Figure()
+    fig.add_trace(go.Bar(x=drivers, y=changes, marker=dict(color=colors)))
+    fig.update_layout(
+        title='position changes on lap 1',
+        xaxis_title='driver',
+        yaxis_title='positions gained/lost',
+        template='plotly_dark')
+    return fig
