@@ -671,24 +671,28 @@ def delta(driver1, driver2, session):
 
     tel1 = fastest1.get_telemetry()
     tel2 = fastest2.get_telemetry()
+    
+
+    #tel1['seconds']=tel1['Time'].dt.total_seconds()
+    #tel2['seconds'] = tel2['Time'].dt.total_seconds()
+
+    tel1 = tel1.copy()
+    tel2 = tel2.copy()
+    tel1['seconds']=(tel1['Time'] - tel1['Time'].iloc[0]).dt.total_seconds()
+    tel2['seconds']=(tel2['Time'] - tel2['Time'].iloc[0]).dt.total_seconds()
+
+    tel1['pct']=tel1['Distance']/ tel1['Distance'].max() * 100
+    tel2['pct']=tel2['Distance'] / tel2['Distance'].max() *100
 
 
-    tel1['seconds']=tel1['Time'].dt.total_seconds()
-    tel2['seconds'] = tel2['Time'].dt.total_seconds()
-
-    max1 = tel1['Distance'].max()
-    max2 = tel2['Distance'].max()
-    maxdist = min(max1, max2)
-
-
-    f1 = interpolate.interp1d(tel1['Distance'], tel1['seconds'], fill_value='extrapolate')
-    f2= interpolate.interp1d(tel2['Distance'], tel2['seconds'], fill_value= 'extrapolate')
+    f1 = interpolate.interp1d(tel1['pct'], tel1['seconds'], fill_value='extrapolate')
+    f2= interpolate.interp1d(tel2['pct'], tel2['seconds'], fill_value= 'extrapolate')
 
 
 
     d = 0
     result = []
-    while d < maxdist:
+    while d <= 100:
         d1 = f1(d)
         d2= f2(d)
         deltaa = d1 - d2
@@ -696,7 +700,7 @@ def delta(driver1, driver2, session):
         result.append({
             'distance': d,
             'delta': round(float(deltaa),3)})
-        d = d + 10
+        d = d + 1
     return result
 
 
