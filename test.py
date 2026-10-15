@@ -1109,3 +1109,18 @@ session = get_session(2026, 'Singapore', 'Q')
 
 data = delta('VER','HAM', session)
 print(data[-5:]) """
+
+
+
+
+
+
+
+
+"""
+
+from charts import perfectlap_chart
+session =get_session(2026, 'Singapore', 'Q')
+fig=perfectlap_chart(session,'VER')
+fig.show()
+"""

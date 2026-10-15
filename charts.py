@@ -573,3 +573,29 @@ def delta_chart(d1,d2,session):
         yaxis_title=f'delta, negative = {d1} ahead',
         template='plotly_dark')
     return fig
+
+
+
+
+
+
+def perfectlap_chart(session,driver):
+    from analyzedata import perfectlap
+    data=perfectlap(session,driver)
+
+
+    sectors =['S1','S2','S3']
+    best=[data['s1']['best'],   data['s2']['best'],  data['s3']['best']]
+    actual=[data['s1']['actual'], data['s2']['actual'], data['s3']['actual']]
+
+    fig=go.Figure()
+    fig.add_trace(go.Bar(x=sectors, y=best, name='best possible'))
+    fig.add_trace(go.Bar(x=sectors,y=actual, name='actual fastest'))
+    fig.update_layout(
+        title=('perfect lap vs actual fastest'),
+        xaxis_title='sector',
+        yaxis_title='time',
+        barmode='group',
+        template='plotly_dark')
+    
+    return fig
