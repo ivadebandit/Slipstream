@@ -1140,3 +1140,10 @@ from charts import fueleffect_chart
 session = get_session(2024, 'Hungary','R')
 fig = fueleffect_chart(session, 'RIC')
 fig.show()"""
+
+
+"""
+from charts import undercuteffect_chart
+session = get_session(2024, 'Hungary', 'R')
+chart=undercuteffect_chart(session, 'HAM', 'VER')
+chart.show()"""

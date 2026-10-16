@@ -661,3 +661,42 @@ def fueleffect_chart(session, driver):
     fig.update_yaxes(title_text='time gain per lap')
     fig.update_layout(template='plotly_dark')
     return fig
+
+
+
+
+
+def undercuteffect_chart(session, d1,d2):
+
+    from analyzedata import undercuteffect
+    data=undercuteffect(session, d1, d2)
+
+    box = data[0]
+    checkpoints=['before', 'after_d1_pit','after_d2_pit']
+    d1_positions =[
+        box['before']['d1'],
+        box['after_d1_pit']['d1'],
+        box['after_d2_pit']['d1']]
+    d2_positions=[
+        box['before']['d2'],
+        box['after_d1_pit']['d2'],
+        box['after_d2_pit']['d2']]
+
+
+    fig=go.Figure()
+    fig.add_trace(go.Bar(x=checkpoints, y=d1_positions, name=d1))
+    fig.add_trace(go.Bar(x=checkpoints, y=d2_positions, name=d2))
+    success = 'success' if box['success'] else 'fail'
+
+    fig.update_layout(
+        title=f'{d1} undercut vs {d2} - {success}',
+        xaxis_title='checkpoint',
+        yaxis_title='position',
+        barmode='group',
+        template='plotly_dark')
+    fig.update_yaxes(autorange='reversed', dtick=1)
+
+    return fig
+
+
+    
