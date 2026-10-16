@@ -633,3 +633,31 @@ def lap1start_chart(session):
         yaxis_title='positions gained/lost',
         template='plotly_dark')
     return fig
+
+
+
+# journal!!!!!!!!!!!!!!!!!!!!!!!!!1!!!!!!!!!!
+
+
+
+
+
+
+
+
+def fueleffect_chart(session, driver):
+
+    from analyzedata import fuel_effect
+    data = fuel_effect(session,driver)
+
+    stints=[]
+    rates=[]
+
+    for stint in data:
+        stints.append(stint)
+        rates.append(data[stint]['fuel_effect'])
+    fig = px.bar(x=stints, y=rates,title= f'{driver} fuel effect per stint')
+    fig.update_xaxes( title_text='stint', dtick=1)
+    fig.update_yaxes(title_text='time gain per lap')
+    fig.update_layout(template='plotly_dark')
+    return fig

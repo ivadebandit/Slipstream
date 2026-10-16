@@ -841,6 +841,7 @@ def fuel_effect(session,driver):
     laps = laps[laps['Driver'] == driver]
     laps = laps[laps['PitInTime'].isna()]
     laps = laps[laps['PitOutTime'].isna()]
+    laps = laps[laps['TyreLife'] > 1]
 
     laps = laps.copy()
     laps['seconds'] = laps['LapTime'].dt.total_seconds()
@@ -855,6 +856,10 @@ def fuel_effect(session,driver):
 
         if len(stintlaps) < 2:
             continue
+
+        median= stintlaps['seconds'].median()
+        stintlaps=stintlaps[stintlaps['seconds'] <= median + 3]
+
 
         for i in range(1, len(stintlaps)):
             prev = stintlaps.iloc[i-1]['seconds']

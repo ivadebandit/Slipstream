@@ -1046,9 +1046,9 @@ fig.show()"""
 # not committed !!!!!!
 from charts import championshipbattle_chart
 fig=championshipbattle_chart(2026,['Australia','China','Suzuka','Miami','Canada','Monaco','Barcelona','Austria','Silverstone','Spa','Hungary','Zandvoort','Monza','Madrid','Baku','Bahrain','Singapore'])
-fig.show()"""
+fig.show()
 
-
+"""
 
 
 
@@ -1131,4 +1131,12 @@ fig.show()
 from charts import lap1start_chart
 session  = get_session(2024,'Brazil','R')
 fig=lap1start_chart(session)
+fig.show()"""
+
+
+
+"""
+from charts import fueleffect_chart
+session = get_session(2024, 'Hungary','R')
+fig = fueleffect_chart(session, 'RIC')
 fig.show()"""
