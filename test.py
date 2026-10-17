@@ -1147,3 +1147,9 @@ from charts import undercuteffect_chart
 session = get_session(2024, 'Hungary', 'R')
 chart=undercuteffect_chart(session, 'HAM', 'VER')
 chart.show()"""
+
+
+from charts import overcuteffect_chart
+session = get_session(2021, 'Monaco','R')
+fig=overcuteffect_chart(session, 'PER','VET')
+fig.show()

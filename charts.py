@@ -700,3 +700,40 @@ def undercuteffect_chart(session, d1,d2):
 
 
     
+
+
+
+def overcuteffect_chart(session, d1,d2):
+
+    from analyzedata import overcuteffect
+    data=overcuteffect(session, d1,d2)
+
+    box = data[0]
+    checkpoints =['before', 'afterd2pit', 'afterd1pit']
+    d1_pos =[
+        box['before']['d1'],
+        box['afterd2pit']['d1'],
+        box['afterd1pit']['d1']]
+    d2_pos=[
+        box['before']['d2'],
+        box['afterd2pit']['d2'],
+        box['afterd1pit']['d2']]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=checkpoints, y=d1_pos, name=d1))
+    fig.add_trace(go.Bar(x=checkpoints, y=d2_pos, name=d2))
+
+    success= 'success' if box['success'] else 'failed'
+    fig.update_layout(
+        title=f'{d1} overcut {d2} - {success}',
+        xaxis_title='checkpoints',
+        yaxis_title='position',
+        barmode='group',
+        template='plotly_dark')
+
+    fig.update_yaxes(autorange='reversed', dtick=1)
+    return fig
+# small issue with success line in output in the title chart
+# too lazy to fix now will fix later
+
+                   
