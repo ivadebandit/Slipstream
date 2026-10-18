@@ -770,4 +770,51 @@ def careerstats_chart(years,races,drivers):
 
     return fig
 
+
+
+
+
+
+
+def finishstats_chart(driver,circuit,years):
+
+    from analyzedata import bestfinish,worstfinish, avgfinish
+    best= bestfinish(driver, circuit,years)
+    worst=worstfinish(driver,circuit,years)
+    avg=avgfinish(driver,circuit,years)
+
+    labels = ['best','worst','average']
+
+    if worst == 'DNF':
+        worstval= 20
+        worsttext = 'DNF'
+    else:
+        worstval=worst
+        worsttext = f'P{worst}'
+
+    values =[best, worstval,avg]
+    textlabels= [
+        f'P{best}',
+        worsttext,
+        f'P{avg}']
+
+    fig=go.Figure()
+    fig.add_trace(go.Bar(
+        x=labels,
+        y=values,
+        text=textlabels,
+        textposition='auto',
+        marker_color=['lightgreen','red','lightblue']))
+
+    fig.update_layout(
+        title=f'{driver} results at {circuit}',
+        xaxis_title='stat',
+        yaxis_title='position',
+        template='plotly_dark')
+    fig.update_yaxes(dtick=1)
+    return fig
+
+
+
+
                    

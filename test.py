@@ -1163,3 +1163,10 @@ fig.show()"""
 from charts import careerstats_chart
 fig = careerstats_chart([2026], ['Bahrain', 'Jeddah', 'Melbourne', 'Suzuka', 'Imola'], ['VER', 'HAM', 'LEC', 'NOR'])
 fig.show()"""
+
+
+
+"""
+from charts import finishstats_chart
+fig =finishstats_chart('VER','Singapore',[2017,2018,2019,2020,2021,2022,2023,2024,2025,2026])
+fig.show()"""
