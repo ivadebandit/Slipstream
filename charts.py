@@ -736,4 +736,38 @@ def overcuteffect_chart(session, d1,d2):
 # small issue with success line in output in the title chart
 # too lazy to fix now will fix later
 
+
+
+
+
+
+
+
+def careerstats_chart(years,races,drivers):
+
+    from analyzedata import wins_count, podium_count, pole_count
+
+    wins=[]
+    podiums=[]
+    poles=[]
+    for driver in drivers:
+        wins.append(wins_count(years,races,driver))
+        podiums.append(podium_count(years,races,driver))
+        poles.append(pole_count(years,races, driver))
+
+
+    fig =go.Figure()
+    fig.add_trace(go.Bar(x=drivers, y=wins, name='wins'))
+    fig.add_trace(go.Bar(x=drivers,y=podiums,name='podiums'))
+    fig.add_trace(go.Bar(x=drivers,y=poles,name='poles'))
+
+    fig.update_layout(
+        title=f'{driver} stats',
+        xaxis_title='driver',
+        yaxis_title='count',
+        barmode='group',
+        template='plotly_dark')
+
+    return fig
+
                    
