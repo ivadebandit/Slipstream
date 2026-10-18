@@ -804,7 +804,7 @@ def finishstats_chart(driver,circuit,years):
         y=values,
         text=textlabels,
         textposition='auto',
-        marker_color=['lightgreen','red','lightblue']))
+        marker_color=['lightgreen','lightred','lightblue']))
 
     fig.update_layout(
         title=f'{driver} results at {circuit}',
@@ -816,5 +816,32 @@ def finishstats_chart(driver,circuit,years):
 
 
 
+def positionsgained_chart(session):
 
+    from analyzedata import positionsgained
+    data=positionsgained(session)
+    sorteddata = sorted(data, key=lambda x:x['gain'], reverse=True)
+
+    drivers=[]
+    gains=[]
+    colors=[]
+
+    for entry in sorteddata:
+        drivers.append(entry['driver'])
+        gains.append(entry['gain'])
+        if entry['gain'] >=0:
+            colors.append('lightgreen')
+        else:
+            colors.append('red')
+
+
+    fig=go.Figure()
+    fig.add_trace(go.Bar(x=drivers, y=gains, marker=dict(color=colors)))
+    fig.update_layout(
+        title='positions gained or lost throughout the race',
+        xaxis_title='driver',
+        yaxis_title='positions gained',
+        template='plotly_dark')
+
+    return fig
                    

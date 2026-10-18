@@ -1170,3 +1170,9 @@ fig.show()"""
 from charts import finishstats_chart
 fig =finishstats_chart('VER','Singapore',[2017,2018,2019,2020,2021,2022,2023,2024,2025,2026])
 fig.show()"""
+
+"""
+from charts import positionsgained_chart
+session = get_session(2026, 'Bahrain', 'R')
+fig = positionsgained_chart(session)
+fig.show()"""
