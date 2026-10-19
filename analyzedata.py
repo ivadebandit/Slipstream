@@ -1254,12 +1254,23 @@ def stintsum(session,driver):
     driverlaps= driverlaps[driverlaps['Compound'].notna()]
     driverlaps = driverlaps[driverlaps['PitInTime'].isna()]
     driverlaps= driverlaps[driverlaps['PitOutTime'].isna()]
+    driverlaps=driverlaps[driverlaps['IsAccurate']==True]
+    driverlaps=driverlaps[driverlaps['Deleted']==False]
+    driverlaps=driverlaps[driverlaps['TrackStatus']=='1']
+    driverlaps=driverlaps[driverlaps['TyreLife'] >1]
+
 
     results = []
 
     for stint in driverlaps['Stint'].unique():
         stintlaps = driverlaps[driverlaps['Stint'] ==stint]
         stintlaps = stintlaps.sort_values('LapNumber')
+
+        laptimes = stintlaps['LapTime'].dt.total_seconds()
+        median=laptimes.median()
+        stintlaps=stintlaps[laptimes <= median + 3]
+        
+        
         for _, row in stintlaps.iterrows():
             results.append({
                 'stint': int(stint),
