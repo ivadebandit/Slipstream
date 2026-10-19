@@ -1176,3 +1176,9 @@ from charts import positionsgained_chart
 session = get_session(2026, 'Bahrain', 'R')
 fig = positionsgained_chart(session)
 fig.show()"""
+
+"""
+from charts import stintsum_chart
+session = get_session(2022, 'Mexico','R')
+fig = stintsum_chart(session,'VER')
+fig.show()"""

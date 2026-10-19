@@ -844,4 +844,40 @@ def positionsgained_chart(session):
         template='plotly_dark')
 
     return fig
-                   
+
+
+
+def stintsum_chart(session,driver):
+
+    from analyzedata import stintsum
+    data=stintsum(session,driver)
+
+    stints=[]
+    for lap in data:
+        if lap['stint'] not in stints:
+            stints.append(lap['stint'])
+
+    fig=go.Figure()
+    for stint in stints:
+        laps=[]
+        times=[]
+        compound= ""
+        for lap in data:
+            if lap['stint'] ==stint:
+                laps.append(lap['lap'])
+                times.append(lap['lap_time'])
+                compound=lap['compound']
+
+        fig.add_trace(go.Scatter(
+            x=laps,
+            y=times,
+            mode='lines+markers',
+            name=f'stint {stint} on {compound}'))
+
+    fig.update_layout(
+        title=f'{driver} lap times by stint',
+        xaxis_title='lap number',
+        yaxis_title='lap time',
+        template='plotly_dark')
+
+    return fig
