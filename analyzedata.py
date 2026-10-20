@@ -1319,10 +1319,18 @@ def compound_pace(session,driver):
     driverlaps=driverlaps[driverlaps['PitInTime'].isna()]
     driverlaps=driverlaps[driverlaps['PitOutTime'].isna()]
     driverlaps=driverlaps[driverlaps['Compound'].notna()]
+    driverlaps=driverlaps[driverlaps['IsAccurate']==True]
+    driverlaps=driverlaps[driverlaps['Deleted']==False]
+    driverlaps=driverlaps[driverlaps['TrackStatus']=='1']
+    driverlaps=driverlaps[driverlaps['TyreLife']>1]
 
     results =[]
     for compound in driverlaps['Compound'].unique():
         compoundlaps = driverlaps[driverlaps['Compound']==compound]
+
+        lap_times=compoundlaps['LapTime'].dt.total_seconds()
+        median =lap_times.median()
+        compoundlaps=compoundlaps[lap_times <= median+3]
         laptimes =compoundlaps['LapTime'].dt.total_seconds()
 
         results.append({
