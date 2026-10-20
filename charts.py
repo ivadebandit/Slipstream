@@ -909,3 +909,37 @@ def compoundusage_chart(session,driver):
 
     fig.update_yaxes(autorange='reversed')
     return fig
+
+
+
+
+
+
+
+def compoundpace_chart(session,driver):
+    from analyzedata import compound_pace
+    data=compound_pace(session,driver)
+
+    compounds=[]
+    averages=[]
+    fastests=[]
+    slowests=[]
+
+    for entry in data:
+        compounds.append(entry['compound'])
+        averages.append(entry['average'])
+        fastests.append(entry['fastest'])
+        slowests.append(entry['slowest'])
+    fig = go.Figure()
+
+    fig.add_trace(go.Bar(x=compounds,y=averages,name='average'))
+    fig.add_trace(go.Bar(x=compounds,y=fastests,name='fastest'))
+    fig.add_trace(go.Bar(x=compounds,y=slowests,name='slowest'))
+
+    fig.update_layout(
+        title=f'{driver} pace by compound',
+        xaxis_title='compound',
+        yaxis_title='laptime',
+        barmode='group',
+        template='plotly_dark')
+    return fig

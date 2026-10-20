@@ -1190,3 +1190,8 @@ from charts import compoundusage_chart
 session=get_session(2026, 'Bahrain','R')
 fig=compoundusage_chart(session, 'PER')
 fig.show()"""
+"""
+from charts import compoundpace_chart
+session=get_session(2026,'Bahrain', 'R')
+fig=compoundpace_chart(session,'PER')
+fig.show()"""
