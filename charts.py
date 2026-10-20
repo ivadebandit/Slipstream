@@ -881,3 +881,31 @@ def stintsum_chart(session,driver):
         template='plotly_dark')
 
     return fig
+
+
+
+def compoundusage_chart(session,driver):
+
+    from analyzedata import compound_usage
+    data =compound_usage(session,driver)
+    fig=go.Figure()
+
+    for stint in data:
+        fig.add_trace(go.Bar(
+            y=[f"stint {stint['stint']}"],
+            x=[stint['laps']],
+            base=[stint['start_lap']],
+            orientation='h',
+            name=stint['compound'],
+            marker_color='lightblue',
+            text=f"{stint['compound']} ({stint['laps']} laps)",
+            textposition='inside'))
+    fig.update_layout(
+        title=f'{driver} tyre strategy',
+        xaxis_title='lap number',
+        yaxis_title='stint',
+        barmode='stack',
+        template='plotly_dark')
+
+    fig.update_yaxes(autorange='reversed')
+    return fig

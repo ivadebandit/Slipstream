@@ -1182,3 +1182,11 @@ from charts import stintsum_chart
 session = get_session(2022, 'Mexico','R')
 fig = stintsum_chart(session,'VER')
 fig.show()"""
+
+
+"""
+from charts import compoundusage_chart
+
+session=get_session(2026, 'Bahrain','R')
+fig=compoundusage_chart(session, 'PER')
+fig.show()"""
