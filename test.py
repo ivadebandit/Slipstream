@@ -1199,6 +1199,6 @@ fig.show()"""
 
 """
 from charts import positionprogress_chart
-session = get_session(2025, 'Bahrain','R')
+session = get_session(2024, 'Brazil','R')
 fig=positionprogress_chart(session, 'VER')
 fig.show()"""

@@ -5,7 +5,18 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pandas as pd
 
-
+def applytheme(fig, title):
+    fig.update_layout(
+        title=dict(text=title, font=dict(size=20, color='white')),
+        template='plotly_dark',
+        plot_bgcolor='#15151e',
+        paper_bgcolor='#15151e',
+        font=dict(family="Arial, sans-serif", size=14, color="white"),
+        margin=dict(l=50, r=50, t=70, b=50),
+        hoverlabel=dict(bgcolor="black", font_size=14, font_family="Arial"),
+        xaxis=dict(gridcolor='#333333', zerolinecolor='#333333'),
+        yaxis=dict(gridcolor='#333333', zerolinecolor='#333333'))
+    return fig
 
 
 
