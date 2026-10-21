@@ -4,6 +4,10 @@ import plotly.express as px
 import plotly.graph_objects as go 
 from plotly.subplots import make_subplots
 import pandas as pd
+import fastf1.plotting
+
+
+
 
 def applytheme(fig, title):
     fig.update_layout(
@@ -17,6 +21,13 @@ def applytheme(fig, title):
         xaxis=dict(gridcolor='#333333', zerolinecolor='#333333'),
         yaxis=dict(gridcolor='#333333', zerolinecolor='#333333'))
     return fig
+
+
+def getcolor(session, driver_code):
+    try:
+        return fastf1.plotting.get_driver_color(driver_code, session)
+    except:
+        return 'white'
 
 
 
