@@ -68,6 +68,11 @@ def quali_progress(session, driver):
     q1 = driverres.iloc[0]['Q1']
     q2= driverres.iloc[0]['Q2']
     q3= driverres.iloc[0]['Q3']
+
+    q1sec =q1.total_seconds() if pd.notna(q1) else None
+    q2sec=q2.total_seconds() if pd.notna(q2) else None
+    q3sec=q3.total_seconds() if pd.notna(q3) else None
+
     if pd.notna(q2) and pd.notna(q3):
         q1toq2 = (q1-q2).total_seconds()
         q2toq3= (q2-q3).total_seconds()
@@ -81,9 +86,9 @@ def quali_progress(session, driver):
     results = {
         'q1toq2': q1toq2,
         'q2toq3': q2toq3,
-        'q1': q1.total_seconds(),
-        'q2': q2.total_seconds(),
-        'q3':q3.total_seconds()}
+        'q1': q1sec,
+        'q2': q2sec,
+        'q3':q3sec}
     return results
 
 
