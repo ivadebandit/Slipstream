@@ -1195,3 +1195,10 @@ from charts import compoundpace_chart
 session=get_session(2026,'Bahrain', 'R')
 fig=compoundpace_chart(session,'PER')
 fig.show()"""
+
+
+"""
+from charts import positionprogress_chart
+session = get_session(2025, 'Bahrain','R')
+fig=positionprogress_chart(session, 'VER')
+fig.show()"""

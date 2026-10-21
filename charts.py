@@ -943,3 +943,36 @@ def compoundpace_chart(session,driver):
         barmode='group',
         template='plotly_dark')
     return fig
+
+
+
+
+
+def positionprogress_chart(session,driver):
+
+    from analyzedata import position_progress
+    data =position_progress(session,driver)
+
+    laps=[]
+    positions=[]
+
+    for entry in data:
+        laps.append(entry['lap'])
+        positions.append(entry['position'])
+
+    fig= go.Figure()
+    fig.add_trace(go.Scatter(
+        x=laps,
+        y=positions, 
+        mode='lines+markers',
+        name=driver,
+        marker=dict(size=6),
+        line=dict(width=2)))
+
+    fig.update_layout(
+        title=f'{driver} position progress',
+        xaxis_title='lap',
+        yaxis_title='position',
+        template='plotly_dark')
+    fig.update_yaxes(autorange='reversed',dtick=1)
+    return fig
