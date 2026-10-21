@@ -921,7 +921,7 @@ def undercuteffect(session, driver1, driver2):
         wasbehind = d11 > d21
         stillbehind = d12 > d22
         aheadafter = d13 < d23
-        success = wasbehind and aheadafter
+        success = aheadafter
 
         results.append({
             'pit1_lap': int(pit1lap),
@@ -981,9 +981,12 @@ def overcuteffect(session, driver1, driver2):
         d21 = c1d2.iloc[0]['Position']
         d22 = c2d2.iloc[0]['Position']
         d23= c3d2.iloc[0]['Position']
-        was_ahead = d11 < d21
-        still_ahead =d13<d23
-        success = was_ahead and still_ahead
+        
+        
+        
+        gained = (d11>d21) and (d13<d23)
+        defended=(d11<d21) and (d13<d23)
+        success= gained or defended
 
 
         results.append({
