@@ -1202,3 +1202,20 @@ from charts import positionprogress_chart
 session = get_session(2024, 'Brazil','R')
 fig=positionprogress_chart(session, 'VER')
 fig.show()"""
+
+
+
+
+
+from charts import fastestlap_chart, consistency_chart, qualiprog_chart
+from charts import fastestoverall_chart
+session = get_session(2026, 'Singapore','R')
+drivers=['VER','HAM','LEC','ALO','GAS','BOT']
+fig1 = fastestlap_chart(session,drivers)
+fig1.show()
+fig2=consistency_chart(session,'HUL')
+fig2.show()
+fig3=qualiprog_chart(session,'VER')
+fig3.show()
+fig4=fastestoverall_chart(session)
+fig4.show()

@@ -6,20 +6,46 @@ from plotly.subplots import make_subplots
 import pandas as pd
 import fastf1.plotting
 
-
+COLORS={
+    'background':'#0a0a0a',
+    'paper':'#111111',
+    'text':'#ffffff',
+    'text_secondary':'#888888',
+    'grid': '#1a1a1a',
+    'border':'#2a2a2a',
+    'red':'#e8002d',
+    'green':'#2ecc71',
+    'yellow':'#ffd700',
+    'purple':'#9b59b6',
+    'cyan':'#00d4ff',
+    'soft':'#ff3333',
+    'medium':'#ffd700',
+    'hard':'#ffffff',
+    'inter':'#00d632',
+    'wet':'#0752c1'}
 
 
 def applytheme(fig, title):
     fig.update_layout(
-        title=dict(text=title, font=dict(size=20, color='white')),
+        title=dict(text=title, font=dict(
+            size=18, 
+            family='Arial, Arial Black, sans-serif', color=COLORS['text'])),
         template='plotly_dark',
-        plot_bgcolor='#15151e',
-        paper_bgcolor='#15151e',
-        font=dict(family="Arial, sans-serif", size=14, color="white"),
-        margin=dict(l=50, r=50, t=70, b=50),
-        hoverlabel=dict(bgcolor="black", font_size=14, font_family="Arial"),
-        xaxis=dict(gridcolor='#333333', zerolinecolor='#333333'),
-        yaxis=dict(gridcolor='#333333', zerolinecolor='#333333'))
+        plot_bgcolor=COLORS['background'],
+        paper_bgcolor=COLORS['paper'],
+        font=dict(family='Arial,Arial Black,sans-serif', size=13, color=COLORS['text']),
+        width=900,
+        height=500,
+        margin=dict(l=40, r=40, t=60, b=40),
+        hoverlabel=dict(bgcolor="black", font_size=13, font_family="Arial"),
+        
+        xaxis=dict(
+            gridcolor=COLORS['grid'], zerolinecolor=COLORS['grid'], 
+            linecolor=COLORS['border']),
+        yaxis=dict(
+            gridcolor=COLORS['grid'],zerolinecolor=COLORS['grid'],
+            linecolor=COLORS['border']),
+        legend=dict(bgcolor=COLORS['paper'], bordercolor=COLORS['border'],borderwidth=1,font=dict(size=12)))
     return fig
 
 
@@ -27,21 +53,24 @@ def getcolor(session, driver_code):
     try:
         return fastf1.plotting.get_driver_color(driver_code, session)
     except:
-        return 'white'
+        return COLORS['text_secondary']
 
 
 
 def fastestlap_chart(session, drivers):
     times = []
+    colors=[]
     for driver in drivers:
-        time = fastest_lap(session,driver)
-        times.append(time)
+        times.append(fastest_lap(session,driver))
+        colors.append(getcolor(session,driver))
     
     
-    fig = px.bar(x=drivers,y=times, title='fastest lap')
-    fig.update_xaxes(title_text='driver')
-    fig.update_yaxes(title_text='lap time')
-    return fig
+    fig = px.bar(x=drivers,y=times)
+
+    fig.update_traces(marker_color=colors)
+    fig.update_xaxes(title_text='Driver')
+    fig.update_yaxes(title_text='Lap Time')
+    return applytheme(fig, 'Fastest Lap Comparison')
 
 
 
@@ -56,10 +85,11 @@ def fastestoverall_chart(session):
 
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=sectors, y=best, name='theoretical best'))
-    fig.add_trace(go.Bar(x=sectors,y=actual,name='actual best'))
-    fig.show()
-
+    fig.add_trace(go.Bar(x=sectors, y=best, name='Theoretical Best'))
+    fig.add_trace(go.Bar(x=sectors,y=actual,name='Actual Best'))
+    fig.update_xaxes(title_text='Sector')
+    fig.update_yaxes(title_text='Lap Time')
+    return applytheme(fig, 'Fastest Overall Sector by Sector')
 
 
 
@@ -73,7 +103,6 @@ def consistency_chart(session, driver):
     filter=filter[filter['Deleted']==False]
     filter=filter[filter['TrackStatus']=='1']
     filter=filter[filter['LapTime'].notna()]
-
     filter = filter.copy()
     filter['seconds'] = filter['LapTime'].dt.total_seconds()
 
@@ -82,40 +111,26 @@ def consistency_chart(session, driver):
     mean = sum(laptimes) / len(laptimes)
     std = filter['seconds'].std()
     
-
-
+    color=getcolor(session,driver)
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x = lapnumbers,
         y = laptimes,
         mode='lines+markers',
-        line=dict(color='pink') ))
+        line=dict(color=color)))
     fig.add_hrect(
         y0= mean - std,
         y1 = mean +std,
-        fillcolor='blue',
-        opacity=0.33,
+        fillcolor='gray',
+        opacity=0.2,
         line_width = 0 )
-        #annotation_text = '+- 1 std',
-        #annotation_position = 'top left' )
-   
     fig.add_hline(
         y=mean,
         line_dash= 'dash',
-        line_color = 'red'
-    )
-
-    fig.update_layout(
-        title= f'{driver} consistency',
-        
-        xaxis_title = 'lap',
-        yaxis_title = 'laptime',
-        template='plotly_dark')
-    return fig
-
-
-
-
+        line_color = 'white')
+    fig.update_xaxes(title_text='Lap')
+    fig.update_yaxes(title_text='Lap Time')
+    return applytheme(fig, f'{driver} Consistency')
 
 
 
@@ -125,6 +140,7 @@ def qualiprog_chart(session, driver):
 
 
     data = quali_progress(session, driver)
+    color= getcolor(session,driver)
     parts = []
     times = []
 
@@ -142,19 +158,17 @@ def qualiprog_chart(session, driver):
     fig.add_trace(go.Scatter(
         x=parts,
         y=times,
-        mode = 'lines + markers',
+        mode = 'lines+markers',
         marker= dict(size = 12 ),
-        line = dict(color='cyan', width = 3),
+        line = dict(color=color, width = 3),
         name=driver ))
 
 
     fig.update_layout(
-        title=f'{driver} quali progress ',
-        xaxis_title = 'qualifying session',
-        yaxis_title = 'lap times',
+        xaxis_title = 'Qualifying Session',
+        yaxis_title = 'Lap Times',
         template = 'plotly_dark' )
-    return fig
-
+    return applytheme(fig, f'{driver} Qualifying Progress')
 
 
 from analyzedata import qualipositions 
