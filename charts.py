@@ -384,9 +384,10 @@ def racepace_chart(session,driver):
 
     stints =list(data.keys())
     laptimes=list(data.values())
-    fig =px.bar(x=stints, y=laptimes,title=f'{driver} race pace')
-    fig.update_xaxes(title_text='stint', dtick=1)
-    fig.update_yaxes(title_text='average laptime')
+    fig =px.bar(x=stints, y=laptimes)
+    fig.update_traces(marker_color=getcolor(session,driver))
+    fig.update_xaxes(title_text='Stint', dtick=1)
+    fig.update_yaxes(title_text='Average Lap Time')
     return applytheme(fig, f'{driver} Average Lap Time per Stint')
 
 
@@ -409,11 +410,11 @@ def tiredeg_chart(session,driver):
         degs.append(stint['deg'])
         compounds.append(stint['compound'])
 
-    fig=px.bar(x=stints, y=degs,title=f'{driver} tire degradation per stint')
-    fig.update_xaxes(title_text='stint', dtick=1)
-    fig.update_yaxes(title_text='degradation')
-    return fig
-
+    fig=px.bar(x=stints, y=degs)
+    fig.update_traces(marker_color=getcolor(session,driver))
+    fig.update_xaxes(title_text='Stint', dtick=1)
+    fig.update_yaxes(title_text='Degradation (s/lap)')
+    return applytheme(fig, f'{driver} Tire Degradation')
 
 
 
@@ -426,16 +427,14 @@ def teammategappace_chart(session,d1,d2):
 
     paces = [data['pace1'],data['pace2']]
 
+    colors=[getcolor(session,d1), getcolor(session,d2)]
+
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=drivers,y=paces, name ='avg pace'))
+    fig.add_trace(go.Bar(x=drivers,y=paces, marker_color=colors))
 
-    fig.update_layout(
-        title='pace diff between two drivers',
-        xaxis_title='driver',
-        yaxis_title='pace',
-        template='plotly_dark' )
-    return fig
-
+    fig.update_xaxes(title_text='Driver')
+    fig.update_yaxes(title_text='Average Race Pace')
+    return applytheme(fig, f'{d1} vs {d2} Race Pace')
 
 
 
@@ -454,17 +453,13 @@ def trackevo_chart(session):
         bests.append(d['best'])
 
     fig=go.Figure()
-    #fig.add_trace(go.Scatter(x=laps,y=times, mode='markers',name='laptime', line=dict(
-     #   color='gray',width=1)))
-    fig.add_trace(go.Scatter(x=laps,y=bests,mode='markers',name='session best',line=dict(
-        color='red', width=1.7)))
-    fig.update_layout(
-        title='track evolution',
-        xaxis_title='lap',
-        yaxis_title='lap time',
-        template='plotly_dark')
+    fig.add_trace(go.Scatter(
+        x=laps,y=bests,mode='markers',
+        name='Session Best', marker=dict(color=COLORS['red'], size=5)))
+    fig.update_xaxes(title_text='Lap')
+    fig.update_yaxes(title_text='Lap Time (s)')
 
-    return fig
+    return applytheme(fig, 'Track Evolution')
 
 
 
@@ -476,6 +471,7 @@ def drszones_chart(session,driver):
 
     telemetry=data['telemetry']
     zones=data['zones']
+    # color=getcolor(session,driver)
 
     fig = go.Figure()
 
@@ -495,18 +491,13 @@ def drszones_chart(session,driver):
             opacity=0.4,
             line_width=0)
 
-    fig.update_layout(
-        title=f'{driver} drs zones on speed trace',
-        xaxis_title='distance',
-        yaxis_title= 'speed',
-        template='plotly_dark')
-    return fig
-
-#  check for 2026 in docs!!
+    fig.update_xaxes(title_text='Distance (m)')
+    fig.update_yaxes(title_text='Speed')
+    return applytheme (fig, 'DRS Zones')
 
 
 
-def h2h_chart(races, d1,d2, years):
+def h2h_chart(races, d1,d2, years,session):
     from analyzedata import h2h
     data =h2h(d1,d2, races,years)
     circuits = list(data.keys())
@@ -519,16 +510,12 @@ def h2h_chart(races, d1,d2, years):
         d2wins.append(data[circuit]['d2_wins'])
 
     fig=go.Figure()
-    fig.add_trace(go.Bar(x=circuits, y=d1wins,name=d1))
-    fig.add_trace(go.Bar(x=circuits,y=d2wins,name=d2))
-    fig.update_layout(
-        title=f'{d1} vs {d2} h2h',
-        xaxis_title='circuit',
-        yaxis_title='qualifying wins',
-        barmode='group',
-        template='plotly_dark')
-    return fig
 
+    fig.add_trace(go.Bar(x=circuits, y=d1wins,name=d1,marker_color=getcolor(session,d1)))
+    fig.add_trace(go.Bar(x=circuits,y=d2wins,name=d2,marker_color=getcolor(session,d2)))
+    fig.update_xaxes(title_text='Circuit')
+    fig.update_yaxes(title_text='Qualifying Wins')
+    return applytheme(fig, f'{d1} vs {d2} Head to Head')
 
 
 
@@ -547,18 +534,12 @@ def wetdrycomp_chart(races,drivers):
             drypos.append(data[driver]['dry'])
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=drivers2,y=wetpos, name='wet'))
-    fig.add_trace(go.Bar(x=drivers2,y=drypos,name='dry'))
+    fig.add_trace(go.Bar(x=drivers2,y=wetpos, name='wet', marker_color=COLORS['cyan']))
+    fig.add_trace(go.Bar(x=drivers2,y=drypos,name='dry',marker_color=COLORS['red']))
 
-    fig.update_layout(
-        title='wet  vs dry performance',
-        xaxis_title='driver',
-        yaxis_title='avg position',
-        barmode='group',
-        template='plotly_dark')
-
-    fig.update_yaxes(autorange= 'reversed', dtick=1)
-    return fig
+    fig.update_xaxes(title_text='Driver')
+    fig.update_yaxes(autorange= 'reversed',title_text='Average Position', dtick=1)
+    return applytheme(fig, 'Wet vs Dry Performance')
 
 
 
@@ -576,24 +557,22 @@ def teammategapquali_chart(d1,d2,races,years):
         gaps.append(entry['gap'])
 
         if entry['faster'] == d1:
-            colors.append('blue')
+            colors.append(COLORS['cyan'])
         else:
-            colors.append('red')
+            colors.append(COLORS['yellow'])
 
     fig=go.Figure()
-    fig.add_trace(go.Bar(x=circuits,y=gaps, name='quali gap', marker=dict(color=colors)))
-    fig.update_layout(
-        title=f'{d1} (blue) vs {d2} (red) quali difference',
-        xaxis_title='race',
-        yaxis_title='gap',
-        template='plotly_dark')
-    return fig
+    fig.add_trace(go.Bar(x=circuits,y=gaps, name='Qualifying Gap', marker_color=colors))
+    fig.update_xaxes(title_text='Race')
+    fig.update_yaxes(title_text='Gap (s)')
+    return applytheme(fig, f'{d1} (Cyan) vs {d2} (Yellow) Qualifying Gap')
 
 
 
 
 
-def championshipbattle_chart(year,races):
+
+def championshipbattle_chart(year,races,session):
     from analyzedata import championship_battle
     data = championship_battle(year,races)
 
@@ -604,22 +583,20 @@ def championshipbattle_chart(year,races):
         points=[]
         for entry in data:
             points.append(entry['scores'][driver])
+
+        color=getcolor(session,driver)
         fig.add_trace(go.Scatter(
 
             x=races,
             y=points,
             mode='lines+markers',
             name=driver,
-            marker=dict(size=6),
-            line=dict(width=2)))
-    fig.update_layout(
-        title=f'{year} drivers standings',
-        xaxis_title='race',
-        yaxis_title='points',
-        template='plotly_dark')
-        #height=600 )
-    return fig
-
+            marker=dict(size=6,color=color),
+            line=dict(width=2, color=color)))
+        
+    fig.update_xaxes(title_text='Race')
+    fig.update_yaxes(title_text='Points')
+    return applytheme(fig, f'{year} Championship Battle')
 
 
 def delta_chart(d1,d2,session):
@@ -640,17 +617,13 @@ def delta_chart(d1,d2,session):
         y=deltas,
         mode='lines',
         name=f'{d1} vs {d2}',
-        line=dict(color='cyan', width=2)))
+        line=dict(color=COLORS['cyan'], width=2)))
     fig.add_hline(y=0, line_dash='dash', line_color='white')
 
 
-    fig.update_layout(
-        title=f'{d1} vs {d2} delta',
-        xaxis_title='lap %',
-        yaxis_title=f'delta, negative = {d1} ahead',
-        template='plotly_dark')
-    return fig
-
+    fig.update_xaxes(title_text='Lap %')
+    fig.update_yaxes(title_text=f'Delta (s), negative = {d1} ahead')
+    return applytheme(fig, f'{d1} vs {d2} Delta')
 
 
 

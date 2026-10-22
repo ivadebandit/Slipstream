@@ -1252,3 +1252,41 @@ fig6.show()
 
 fig7=boxboxchart(race)
 fig7.show()"""
+
+
+
+from charts import(
+    racepace_chart, tiredeg_chart, teammategappace_chart, trackevo_chart,
+    drszones_chart, h2h_chart, wetdrycomp_chart, teammategapquali_chart,
+    championshipbattle_chart, delta_chart)
+quali=get_session(2026,'Singapore','Q')
+race=get_session(2026,'Singapore','R')
+"""
+fig1=racepace_chart(race,'NOR')
+fig1.show()
+fig2=tiredeg_chart(race,'GAS')
+fig2.show()
+
+fig3=teammategappace_chart(race, 'ALO','STR')
+fig3.show()
+fig4=trackevo_chart(quali)
+fig4.show()
+
+quali2=get_session(2025,'Monza','Q')
+fig5=drszones_chart(quali2, 'LAW')
+fig5.show()
+
+fig6=h2h_chart(['Monza','Monaco'], 'HAM','RUS', [2025,2026],quali2)
+fig6.show()
+fig7=wetdrycomp_chart([race,race],['VER','HAD'])
+fig7.show()
+"""
+"""
+
+fig8=teammategapquali_chart('BOR','HUL', ['Madrid','Monza'],[2026])
+fig8.show()
+
+fig9 = championshipbattle_chart(2026, ['Bahrain', 'Singapore'], race)
+fig9.show()
+fig10=delta_chart('ANT','BOT', quali)
+fig10.show()"""
