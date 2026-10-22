@@ -23,17 +23,19 @@ COLORS={
     'hard':'#ffffff',
     'inter':'#00d632',
     'wet':'#0752c1'}
+# 'Arial,Arial Black,sans-serif'
+
 
 
 def applytheme(fig, title):
     fig.update_layout(
         title=dict(text=title, font=dict(
             size=18, 
-            family='Arial, Arial Black, sans-serif', color=COLORS['text'])),
+            family='sans-serif', color=COLORS['text'])),
         template='plotly_dark',
         plot_bgcolor=COLORS['background'],
         paper_bgcolor=COLORS['paper'],
-        font=dict(family='Arial,Arial Black,sans-serif', size=13, color=COLORS['text']),
+        font=dict(family='sans-serif', size=13, color=COLORS['text']),
         width=900,
         height=500,
         margin=dict(l=40, r=40, t=60, b=40),
@@ -54,6 +56,35 @@ def getcolor(session, driver_code):
         return fastf1.plotting.get_driver_color(driver_code, session)
     except:
         return COLORS['text_secondary']
+
+def teamcolor(session, team_name):
+    try:
+        return fastf1.plotting.get_team_color(team_name,session)
+    except:
+        pass
+    fallbacks={
+        'Red Bull Racing': '#3671C6',
+        'Red Bull': '#3671C6',
+        'Ferrari': '#E8002D',
+        'Mercedes': '#27F4D2',
+        'McLaren': '#FF8000',
+        'Aston Martin': '#229971',
+        'Alpine': '#FF87BC',
+        'Renault': '#FFF500',
+        'Williams': '#64C4FF',
+        'Racing Bulls': '#6692FF',
+        'AlphaTauri': '#5C37A3',
+        'Toro Rosso': '#1E3D61',
+        'Haas F1 Team': '#B6BABD',
+        'Haas': '#B6BABD',
+        'Kick Sauber': '#52E252',
+        'Alfa Romeo': '#C92D4B',
+        'Sauber': '#C92D4B',
+        'Racing Point': '#F596C8',
+        'Force India': '#FF80C7',
+        'Audi': '#F50537',
+        'Cadillac': '#CCCCCC',}
+    return fallbacks.get(team_name, COLORS['text_secondary'])
 
 
 
@@ -85,8 +116,8 @@ def fastestoverall_chart(session):
 
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=sectors, y=best, name='Theoretical Best'))
-    fig.add_trace(go.Bar(x=sectors,y=actual,name='Actual Best'))
+    fig.add_trace(go.Bar(x=sectors, y=best, name='Theoretical Best',marker_color=COLORS['cyan']))
+    fig.add_trace(go.Bar(x=sectors,y=actual,name='Actual Best',marker_color=COLORS['yellow']))
     fig.update_xaxes(title_text='Sector')
     fig.update_yaxes(title_text='Lap Time')
     return applytheme(fig, 'Fastest Overall Sector by Sector')
@@ -185,15 +216,13 @@ def chart_qualipositions(driver, circuit, years):
         x=yearslist,
         y=positions,
         mode = 'lines+markers',
-        marker = dict(size=14),
+        marker = dict(size=12),
         name=driver ))
 
-    fig.update_yaxes(autorange = 'reversed', title_text='position', dtick=1)
-    fig.update_xaxes(title_text = 'year', dtick=1)
-    fig.update_layout(
-        title= f'{driver} quali results at {circuit}',
-        template= 'plotly_dark' )
-    return fig
+    fig.update_yaxes(autorange = 'reversed', title_text='Position', dtick=1)
+    fig.update_xaxes(title_text = 'Year', dtick=1)
+
+    return applytheme(fig, f'{driver} Qualifying Results at {circuit}')
 
 
 
@@ -215,11 +244,7 @@ def racepositions_chart(driver, circuit,years):
 
     fig.update_yaxes(autorange= 'reversed', title_text='Position', dtick=1)
     fig.update_xaxes(title_text='Year', dtick=1)
-    fig.update_layout(
-        title=f'{driver} race results at {circuit}',
-        template='plotly_dark' )
-    return fig
-
+    return applytheme(fig, f'{driver} Race Results at {circuit}')
 
 
 def bestlapsq_chart(driver,circuit,years):
@@ -239,14 +264,11 @@ def bestlapsq_chart(driver,circuit,years):
         name=driver))
     
     
-    fig.update_xaxes(title_text='year', dtick=1)
+    fig.update_xaxes(title_text='Year', dtick=1)
     
-    fig.update_yaxes(title_text='laptime')
-    fig.update_layout(
-        title= f'{driver} best quali laps at {circuit}',
-        template= 'plotly_dark')
+    fig.update_yaxes(title_text='Lap Time')
+    return applytheme(fig, f'{driver} Best Qualifying Laps at {circuit}')
 
-    fig.show()
 
 
 
@@ -262,36 +284,48 @@ def fastestalltime_chart(circuits, years):
 
         names.append(i)
         times.append(data['time'])
-    fig= px.bar(x=names,y=times, title='fastest lap all time')
-    fig.update_xaxes(title_text='circuit')
-    fig.update_yaxes(title_text='fastest lap')
-    return fig
+    
+    fig= px.bar(x=names,y=times)
+
+    colors=[COLORS['red'], COLORS['cyan'], COLORS['yellow'], 
+            COLORS['green'], COLORS['purple']]
+    bar_colors=[colors[i % len(colors)] for i in range (len(names))]
+    fig.update_traces(marker_color=bar_colors)
+
+    fig.update_xaxes(title_text='Circuit')
+    fig.update_yaxes(title_text='Fastest Lap')
+    return applytheme(fig, 'Fastest Lap All Time')
 
 
 
 
-def driverstandings_chart(year, races):
+def driverstandings_chart(year, races,session):
     from analyzedata import driverstandings
     data= driverstandings(year,races)
 
     standings = sorted(data.items(), key=lambda x:x[1], reverse=True)
-    top10 = standings[:10]
-
     drivers=[]
     points=[]
-    for driver, pointss in top10:
+    colors=[]
+
+
+    for driver, pointss in standings:
         drivers.append(driver)
         points.append(pointss)
-    fig=px.bar(x=drivers, y=points, title='driver standings (top 10)')
+        colors.append(getcolor(session,driver))
+
+    fig=px.bar(x=drivers, y=points)
+    fig.update_traces(marker_color=colors)
     fig.update_xaxes(title_text='Driver')
-    fig.update_yaxes(title_text='points')
+    fig.update_yaxes(title_text='Points')
 
-    return fig
-
-
+    return applytheme(fig, f'{year} Driver Standings')
 
 
-def teamstandings_chart(year,races):
+
+
+
+def teamstandings_chart(year,races,session):
 
     from analyzedata import teamstandings
     data=teamstandings(year,races)
@@ -299,14 +333,18 @@ def teamstandings_chart(year,races):
     standings=sorted(data.items(),key=lambda x: x[1], reverse=True)
     teams=[]
     points=[]
+    colors=[]
+
     for team, pts in standings:
         teams.append(team)
         points.append(pts)
+        colors.append(teamcolor(session,team))
 
-    fig= px.bar(x=teams, y=points, title='constructor standings')
-    fig.update_xaxes(title_text='team')
-    fig.update_yaxes(title_text='points')
-    return fig
+    fig= px.bar(x=teams, y=points)
+    fig.update_traces(marker_color=colors)
+    fig.update_xaxes(title_text='Team')
+    fig.update_yaxes(title_text='Points')
+    return applytheme(fig, f'{year} Constructor Standings')
 
 
 
@@ -321,18 +359,21 @@ def boxboxchart(session):
     drivers=[]
     length=[]
     laps=[]
+    colors=[]
 
     for box in data:
         drivers.append(box['driver'])
         length.append(round(box['duration'],2))
         laps.append(box['lap'])
+        colors.append(getcolor(session, box['driver']))
 
 
-    fig=px.bar(x=drivers, y=length, title='pitstop durations')
+    fig=px.bar(x=drivers, y=length)
+    fig.update_traces(marker_color=colors)
     fig.update_xaxes(title_text='driver')
     fig.update_yaxes(title_text='duration')
 
-    return fig
+    return applytheme(fig, 'Pit Stop Durations')
 
 
 
@@ -345,8 +386,8 @@ def racepace_chart(session,driver):
     laptimes=list(data.values())
     fig =px.bar(x=stints, y=laptimes,title=f'{driver} race pace')
     fig.update_xaxes(title_text='stint', dtick=1)
-    fig.update_yaxes(title_text='average laptime',template= 'plotly_dark')
-    return fig
+    fig.update_yaxes(title_text='average laptime')
+    return applytheme(fig, f'{driver} Average Lap Time per Stint')
 
 
 

@@ -1206,11 +1206,11 @@ fig.show()"""
 
 
 
-
+"""
 from charts import fastestlap_chart, consistency_chart, qualiprog_chart
 from charts import fastestoverall_chart
-session = get_session(2026, 'Singapore','R')
-drivers=['VER','HAM','LEC','ALO','GAS','BOT']
+session = get_session(2026, 'Singapore','Q')
+drivers=['LIN','NOR','GAS','ALO']
 fig1 = fastestlap_chart(session,drivers)
 fig1.show()
 fig2=consistency_chart(session,'HUL')
@@ -1219,3 +1219,36 @@ fig3=qualiprog_chart(session,'VER')
 fig3.show()
 fig4=fastestoverall_chart(session)
 fig4.show()
+"""
+
+
+
+
+
+
+"""
+from charts import (chart_qualipositions, racepositions_chart, bestlapsq_chart,
+                    fastestalltime_chart, driverstandings_chart, 
+                    teamstandings_chart, boxboxchart)
+quali = get_session(2026, 'Bahrain', 'Q')
+race=get_session(2026, 'Bahrain', 'R')
+
+fig1=chart_qualipositions('VER', 'Zandvoort',[2026,2025,2024])
+fig1.show()
+fig2=racepositions_chart('VER', 'Abu Dhabi', [2026,2025,2024])
+fig2.show()
+
+fig3= bestlapsq_chart('VER', 'Monza', [2024,2025,2026])
+fig3.show()
+
+fig4=fastestalltime_chart(['Spa', 'Monaco', 'Brazil'], [2024,2025])
+fig4.show()
+
+fig5=driverstandings_chart(2026, ['Bahrain', 'Singapore'],race)
+fig5.show()
+
+fig6=teamstandings_chart(2026, ['Bahrain','Baku'],race)
+fig6.show()
+
+fig7=boxboxchart(race)
+fig7.show()"""
