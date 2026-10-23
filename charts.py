@@ -639,16 +639,13 @@ def perfectlap_chart(session,driver):
     actual=[data['s1']['actual'], data['s2']['actual'], data['s3']['actual']]
 
     fig=go.Figure()
-    fig.add_trace(go.Bar(x=sectors, y=best, name='best possible'))
-    fig.add_trace(go.Bar(x=sectors,y=actual, name='actual fastest'))
-    fig.update_layout(
-        title=('perfect lap vs actual fastest'),
-        xaxis_title='sector',
-        yaxis_title='time',
-        barmode='group',
-        template='plotly_dark')
-    
-    return fig
+    fig.add_trace(go.Bar(x=sectors, y=best, name='Best Possible',marker_color=COLORS['green']))
+    fig.add_trace(go.Bar(x=sectors,y=actual, name='Actual Fastest',marker_color=getcolor(session,driver)))
+    fig.update_xaxes(title_text='Sector')
+    fig.update_yaxes(title_text='Time')
+    fig.update_layout(barmode='group')
+
+    return applytheme(fig, f'{driver} Perfect Lap Breakdown')
 
 
 
@@ -671,27 +668,15 @@ def lap1start_chart(session):
         changes.append(entry['change'])
 
         if entry['change'] >=0:
-            colors.append('lightgreen')
+            colors.append(COLORS['green'])
         else:
-            colors.append('red')
+            colors.append(COLORS['red'])
 
     fig=go.Figure()
-    fig.add_trace(go.Bar(x=drivers, y=changes, marker=dict(color=colors)))
-    fig.update_layout(
-        title='position changes on lap 1',
-        xaxis_title='driver',
-        yaxis_title='positions gained/lost',
-        template='plotly_dark')
-    return fig
-
-
-
-# journal!!!!!!!!!!!!!!!!!!!!!!!!!1!!!!!!!!!!
-
-
-
-
-
+    fig.add_trace(go.Bar(x=drivers, y=changes, marker_color=colors))
+    fig.update_xaxes(title_text='Driver')
+    fig.update_yaxes(title_text='Positions Gained/Lost')
+    return applytheme(fig, 'Lap 1 Position Changes')
 
 
 
@@ -706,11 +691,12 @@ def fueleffect_chart(session, driver):
     for stint in data:
         stints.append(stint)
         rates.append(data[stint]['fuel_effect'])
-    fig = px.bar(x=stints, y=rates,title= f'{driver} fuel effect per stint')
-    fig.update_xaxes( title_text='stint', dtick=1)
-    fig.update_yaxes(title_text='time gain per lap')
+    fig = px.bar(x=stints, y=rates)
+    fig.update_traces(marker_color=getcolor(session,driver))
+    fig.update_xaxes( title_text='Stint', dtick=1)
+    fig.update_yaxes(title_text='Time Gain Per Lap')
     fig.update_layout(template='plotly_dark')
-    return fig
+    return applytheme(fig, f'{driver} Fuel Impact per Stint')
 
 
 
@@ -732,22 +718,20 @@ def undercuteffect_chart(session, d1,d2):
         box['after_d1_pit']['d2'],
         box['after_d2_pit']['d2']]
 
+    c1 = getcolor(session,d1)
+    c2=getcolor(session,d2)
+    opacity2 = 0.5 if c1==c2 else 1.0
 
     fig=go.Figure()
-    fig.add_trace(go.Bar(x=checkpoints, y=d1_positions, name=d1))
-    fig.add_trace(go.Bar(x=checkpoints, y=d2_positions, name=d2))
-    success = 'success' if box['success'] else 'fail'
+    fig.add_trace(go.Bar(x=checkpoints, y=d1_positions, name=d1,marker_color=c1))
+    fig.add_trace(go.Bar(x=checkpoints, y=d2_positions, name=d2,marker_color=c2, opacity=opacity2))
+    success = 'Success' if box['success'] else 'Fail'
 
-    fig.update_layout(
-        title=f'{d1} undercut vs {d2} - {success}',
-        xaxis_title='checkpoint',
-        yaxis_title='position',
-        barmode='group',
-        template='plotly_dark')
-    fig.update_yaxes(autorange='reversed', dtick=1)
+    fig.update_xaxes(title_text='Checkpoint')
+    fig.update_yaxes(autorange='reversed', title_text='Position',dtick=1)
+    fig.update_layout(barmode='group')
 
-    return fig
-
+    return applytheme(fig, f'{d1} Undercut vs {d2}, ({success})')
 
     
 
@@ -769,24 +753,21 @@ def overcuteffect_chart(session, d1,d2):
         box['afterd2pit']['d2'],
         box['afterd1pit']['d2']]
 
+    
+    c1 = getcolor(session,d1)
+    c2=getcolor(session,d2)
+    opacity2 = 0.5 if c1==c2 else 1.0
+
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=checkpoints, y=d1_pos, name=d1))
-    fig.add_trace(go.Bar(x=checkpoints, y=d2_pos, name=d2))
+    fig.add_trace(go.Bar(x=checkpoints, y=d1_pos, name=d1, marker_color=c1))
+    fig.add_trace(go.Bar(x=checkpoints, y=d2_pos, name=d2,marker_color=c2, opacity=opacity2))
 
-    success= 'success' if box['success'] else 'failed'
-    fig.update_layout(
-        title=f'{d1} overcut {d2} - {success}',
-        xaxis_title='checkpoints',
-        yaxis_title='position',
-        barmode='group',
-        template='plotly_dark')
+    success= 'Success' if box['success'] else 'Fail'
+    fig.update_xaxes(title_text='Checkpoint')
+    fig.update_yaxes(autorange='reversed', title_text='Position', dtick=1)
 
-    fig.update_yaxes(autorange='reversed', dtick=1)
-    return fig
-# small issue with success line in output in the title chart
-# too lazy to fix now will fix later
-
-
+    fig.update_layout(barmode='group')
+    return applytheme(fig, f'{d1} Overcut vs {d2} ({success})')
 
 
 
@@ -807,21 +788,13 @@ def careerstats_chart(years,races,drivers):
 
 
     fig =go.Figure()
-    fig.add_trace(go.Bar(x=drivers, y=wins, name='wins'))
-    fig.add_trace(go.Bar(x=drivers,y=podiums,name='podiums'))
-    fig.add_trace(go.Bar(x=drivers,y=poles,name='poles'))
-
-    fig.update_layout(
-        title=f'{driver} stats',
-        xaxis_title='driver',
-        yaxis_title='count',
-        barmode='group',
-        template='plotly_dark')
-
-    return fig
-
-
-
+    fig.add_trace(go.Bar(x=drivers, y=wins, name='Wins',marker_color=COLORS['yellow']))
+    fig.add_trace(go.Bar(x=drivers,y=podiums,name='Podiums',marker_color=COLORS['cyan']))
+    fig.add_trace(go.Bar(x=drivers,y=poles,name='Poles',marker_color=COLORS['red']))
+    fig.update_xaxes(title_text='Driver')
+    fig.update_yaxes(title_text='Count')
+    fig.update_layout(barmode='group')
+    return applytheme(fig, 'Career Stats')
 
 
 
@@ -854,15 +827,11 @@ def finishstats_chart(driver,circuit,years):
         y=values,
         text=textlabels,
         textposition='auto',
-        marker_color=['lightgreen','lightred','lightblue']))
+        marker_color=[COLORS['green'], COLORS['red'], 'white']))
 
-    fig.update_layout(
-        title=f'{driver} results at {circuit}',
-        xaxis_title='stat',
-        yaxis_title='position',
-        template='plotly_dark')
-    fig.update_yaxes(dtick=1)
-    return fig
+    fig.update_xaxes(title_text='Stat')
+    fig.update_yaxes(title_text='Position', dtick=1)
+    return applytheme(fig, f'{driver} Results at {circuit}')
 
 
 
@@ -880,57 +849,58 @@ def positionsgained_chart(session):
         drivers.append(entry['driver'])
         gains.append(entry['gain'])
         if entry['gain'] >=0:
-            colors.append('lightgreen')
+            colors.append(COLORS['green'])
         else:
-            colors.append('red')
+            colors.append(COLORS['red'])
 
 
     fig=go.Figure()
-    fig.add_trace(go.Bar(x=drivers, y=gains, marker=dict(color=colors)))
-    fig.update_layout(
-        title='positions gained or lost throughout the race',
-        xaxis_title='driver',
-        yaxis_title='positions gained',
-        template='plotly_dark')
-
-    return fig
+    fig.add_trace(go.Bar(x=drivers, y=gains, marker_color=colors))
+    fig.update_xaxes(title_text='Driver')
+    fig.update_yaxes(title_text='Positions Gained')
+    return applytheme(fig, 'Positions Gained/Lost')
 
 
 
-def stintsum_chart(session,driver):
-
+def stintsum_chart(session, driver):
     from analyzedata import stintsum
-    data=stintsum(session,driver)
+    data = stintsum(session, driver)
 
-    stints=[]
+    stints = []
     for lap in data:
         if lap['stint'] not in stints:
             stints.append(lap['stint'])
 
-    fig=go.Figure()
+    tyre_colors = {
+        'SOFT': COLORS['soft'],
+        'MEDIUM': COLORS['medium'],
+        'HARD': COLORS['hard'],
+        'INTERMEDIATE': COLORS['inter'],
+        'WET': COLORS['wet']}
+
+    fig = go.Figure()
     for stint in stints:
-        laps=[]
-        times=[]
-        compound= ""
+        laps = []
+        times = []
+        compound = ""
         for lap in data:
-            if lap['stint'] ==stint:
+            if lap['stint'] == stint:
                 laps.append(lap['lap'])
                 times.append(lap['lap_time'])
-                compound=lap['compound']
+                compound = lap['compound']
 
+        color = tyre_colors.get(compound, COLORS['text_secondary'])
         fig.add_trace(go.Scatter(
             x=laps,
             y=times,
             mode='lines+markers',
-            name=f'stint {stint} on {compound}'))
+            name=f'Stint {stint} ({compound})',
+            line=dict(color=color, width=2),
+            marker=dict(color=color)))
 
-    fig.update_layout(
-        title=f'{driver} lap times by stint',
-        xaxis_title='lap number',
-        yaxis_title='lap time',
-        template='plotly_dark')
-
-    return fig
+    fig.update_xaxes(title_text='Lap Number')
+    fig.update_yaxes(title_text='Lap Time')
+    return applytheme(fig, f'{driver} Lap Times by Stint')
 
 
 
@@ -940,6 +910,13 @@ def compoundusage_chart(session,driver):
     data =compound_usage(session,driver)
     fig=go.Figure()
 
+    tyre_colors={
+        'SOFT': COLORS['soft'],
+        'MEDIUM':COLORS['medium'],
+        'HARD':COLORS['hard'],
+        'INTERMEDIATE': COLORS['inter'],
+        'WET':COLORS['wet']}
+
     for stint in data:
         fig.add_trace(go.Bar(
             y=[f"stint {stint['stint']}"],
@@ -947,18 +924,12 @@ def compoundusage_chart(session,driver):
             base=[stint['start_lap']],
             orientation='h',
             name=stint['compound'],
-            marker_color='lightblue',
+            marker_color=tyre_colors.get(stint['compound'], COLORS['text_secondary']),
             text=f"{stint['compound']} ({stint['laps']} laps)",
             textposition='inside'))
-    fig.update_layout(
-        title=f'{driver} tyre strategy',
-        xaxis_title='lap number',
-        yaxis_title='stint',
-        barmode='stack',
-        template='plotly_dark')
-
-    fig.update_yaxes(autorange='reversed')
-    return fig
+    fig.update_xaxes(title_text='Lap Number')
+    fig.update_yaxes(autorange='reversed', title_text='Stint')
+    return applytheme(fig, f'{driver} Tyre Strategy')
 
 
 
@@ -982,17 +953,13 @@ def compoundpace_chart(session,driver):
         slowests.append(entry['slowest'])
     fig = go.Figure()
 
-    fig.add_trace(go.Bar(x=compounds,y=averages,name='average'))
-    fig.add_trace(go.Bar(x=compounds,y=fastests,name='fastest'))
-    fig.add_trace(go.Bar(x=compounds,y=slowests,name='slowest'))
+    fig.add_trace(go.Bar(x=compounds,y=averages,name='Average',marker_color=COLORS['cyan']))
+    fig.add_trace(go.Bar(x=compounds,y=fastests,name='Fastest',marker_color=COLORS['green']))
+    fig.add_trace(go.Bar(x=compounds,y=slowests,name='Slowest',marker_color=COLORS['red']))
 
-    fig.update_layout(
-        title=f'{driver} pace by compound',
-        xaxis_title='compound',
-        yaxis_title='laptime',
-        barmode='group',
-        template='plotly_dark')
-    return fig
+    fig.update_xaxes(title_text='Compound')
+    fig.update_yaxes(title_text='Lap Time')
+    return applytheme(fig, f'{driver} Pace by Compound')
 
 
 
@@ -1017,12 +984,8 @@ def positionprogress_chart(session,driver):
         mode='lines+markers',
         name=driver,
         marker=dict(size=6),
-        line=dict(width=2)))
+        line=dict(width=2, color=getcolor(session,driver))))
 
-    fig.update_layout(
-        title=f'{driver} position progress',
-        xaxis_title='lap',
-        yaxis_title='position',
-        template='plotly_dark')
-    fig.update_yaxes(autorange='reversed',dtick=1)
-    return fig
+    fig.update_xaxes(title_text='Lap')
+    fig.update_yaxes(autorange='reversed', title_text='Position',dtick=1)
+    return applytheme(fig, f'{driver} Position Progress')

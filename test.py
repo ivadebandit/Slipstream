@@ -1290,3 +1290,61 @@ fig9 = championshipbattle_chart(2026, ['Bahrain', 'Singapore'], race)
 fig9.show()
 fig10=delta_chart('ANT','BOT', quali)
 fig10.show()"""
+
+
+
+from charts import(
+    perfectlap_chart, lap1start_chart, fueleffect_chart, undercuteffect_chart,
+    overcuteffect_chart, careerstats_chart, finishstats_chart,positionsgained_chart,
+    stintsum_chart, compoundusage_chart, compoundpace_chart, positionprogress_chart)
+
+quali=get_session(2026,'Singapore','Q')
+race=get_session(2026,'Singapore','R')
+
+"""fig1=perfectlap_chart(quali, 'LAW')
+fig1.show()
+
+fig2=lap1start_chart(race)
+fig2.show()
+
+fig3=fueleffect_chart(race,'PIA')
+fig3.show()
+
+
+fig5=overcuteffect_chart(race, 'NOR','GAS')
+fig5.show()
+
+fig6=careerstats_chart([2025,2026], ['Monza, Singapore'], ['ANT','VER','LEC'])
+fig6.show()
+""" """
+fig7=finishstats_chart('ALO', 'Monaco', [2022,2023,2025])
+fig7.show()
+
+
+
+
+fig8=positionsgained_chart(race)
+fig8.show()
+
+session =get_session(2026,'Bahrain','R')
+fig10=compoundusage_chart(session, 'PER')
+fig10.show()
+
+fig12=positionprogress_chart(race,'BEA')
+fig12.show()
+"""
+
+
+
+"""
+
+fig4=undercuteffect_chart(race, 'VER','HAD')
+fig4.show()
+
+
+fig11=compoundpace_chart(race,'ALB')
+fig11.show() # default colors
+
+fig9=stintsum_chart(race, 'HUL')
+fig9.show() # default colors
+"""
