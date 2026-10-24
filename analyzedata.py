@@ -190,7 +190,7 @@ def driverstandings(year, races):
         try: 
             sprint= get_session(year, race,'S')
             sprintres= sprint.results
-            for _, row in sprintres.itettows():
+            for _, row in sprintres.iterrows():
                 driver =row['Abbreviation']
                 points=row['Points']
                 results[driver]= results.get(driver,0) + points
