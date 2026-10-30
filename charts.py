@@ -384,8 +384,27 @@ def racepace_chart(session,driver):
 
     stints =list(data.keys())
     laptimes=list(data.values())
+
+    
+    tyre_colors= {
+        'SOFT': COLORS['soft'],
+        'MEDIUM': COLORS['medium'],
+        'HARD': COLORS['hard'],
+        'INTERMEDIATE': COLORS['inter'],
+        'WET': COLORS['wet']}
+    colors = []
+    laps = session.laps[session.laps['Driver'] ==driver]
+
+    for stint in stints:
+        stintlaps = laps[laps['Stint']==stint]
+        if not stintlaps.empty:
+            compound = stintlaps.iloc[0]['Compound']
+            colors.append(tyre_colors.get(compound, COLORS['text_secondary']))
+        else:
+            colors.append(COLORS['text_secondary'])
+
     fig =px.bar(x=stints, y=laptimes)
-    fig.update_traces(marker_color=getcolor(session,driver))
+    fig.update_traces(marker_color=colors)
     fig.update_xaxes(title_text='Stint', dtick=1)
     fig.update_yaxes(title_text='Average Lap Time')
     return applytheme(fig, f'{driver} Average Lap Time per Stint')
@@ -701,8 +720,27 @@ def fueleffect_chart(session, driver):
     for stint in data:
         stints.append(stint)
         rates.append(data[stint]['fuel_effect'])
+
+   
+    tyre_colors= {
+        'SOFT': COLORS['soft'],
+        'MEDIUM': COLORS['medium'],
+        'HARD': COLORS['hard'],
+        'INTERMEDIATE': COLORS['inter'],
+        'WET': COLORS['wet']} 
+
+    colors=[]
+    laps = session.laps[session.laps['Driver']==driver]
+    for stint in stints:
+        stintlaps=laps[laps['Stint'] == stint]
+        if not stintlaps.empty:
+            compound=stintlaps.iloc[0]['Compound']
+            colors.append(tyre_colors.get(compound, COLORS['text_secondary']))
+        else:
+            colors.append(COLORS['text_secondary'])
+    
     fig = px.bar(x=stints, y=rates)
-    fig.update_traces(marker_color=getcolor(session,driver))
+    fig.update_traces(marker_color=colors)
     fig.update_xaxes( title_text='Stint', dtick=1)
     fig.update_yaxes(title_text='Time Gain Per Lap')
     fig.update_layout(template='plotly_dark')
@@ -976,7 +1014,7 @@ def compoundpace_chart(session,driver):
 
     fig.add_trace(go.Bar(x=compounds,y=averages,name='Average',marker_color=colors))
     fig.add_trace(go.Bar(x=compounds,y=fastests,name='Fastest',marker_color=colors, opacity=0.7))
-    fig.add_trace(go.Bar(x=compounds,y=slowests,name='Slowest',marker_color=colors,opactiy=0.4))
+    fig.add_trace(go.Bar(x=compounds,y=slowests,name='Slowest',marker_color=colors,opacity=0.4))
 
     fig.update_xaxes(title_text='Compound')
     fig.update_yaxes(title_text='Lap Time')

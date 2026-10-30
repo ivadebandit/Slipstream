@@ -86,11 +86,36 @@ if 'session' in st.session_state:
                         st.plotly_chart(
                             charts.perfectlap_chart(session,driver),
                             width="stretch")
+            
+            
+            
             with tab2:
-                st.write("hellllo")
-            with tab3: 
-                st.write("test")
-                st.write
+                if sessiontype != "R":
+                    st.write("Choose Race Session")
+                else:
+                    st.plotly_chart(
+                        charts.boxboxchart(session),
+                        width="stretch")
+                    st.plotly_chart(
+                        charts.positionsgained_chart(session),
+                        width="stretch")
+                    st.plotly_chart(
+                        charts.lap1start_chart(session),
+                        width="stretch")
+                    
+                    if len(selected) == 2:
+                        d1= selected[0]
+                        d2=selected[1]
+
+                        st.plotly_chart(
+                            charts.undercuteffect_chart(session,d1,d2),
+                            width="stretch")
+                        st.plotly_chart(
+                            charts.overcuteffect_chart(session,d1,d2),
+                            width="stretch")
+                    else:
+                        st.write("Choose exactly 2 drivers")
+                
 
             
             
