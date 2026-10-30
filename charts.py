@@ -404,14 +404,24 @@ def tiredeg_chart(session,driver):
     degs=[]
     compounds=[]
 
+    tyre_colors= {
+        'SOFT': COLORS['soft'],
+        'MEDIUM': COLORS['medium'],
+        'HARD': COLORS['hard'],
+        'INTERMEDIATE': COLORS['inter'],
+        'WET': COLORS['wet']}
+
+
 
     for stint in data:
         stints.append(stint['stint'])
         degs.append(stint['deg'])
         compounds.append(stint['compound'])
 
+    colors=[tyre_colors.get(c, COLORS['text_secondary']) for c in compounds]
+
     fig=px.bar(x=stints, y=degs)
-    fig.update_traces(marker_color=getcolor(session,driver))
+    fig.update_traces(marker_color=colors)
     fig.update_xaxes(title_text='Stint', dtick=1)
     fig.update_yaxes(title_text='Degradation (s/lap)')
     return applytheme(fig, f'{driver} Tire Degradation')
@@ -951,14 +961,26 @@ def compoundpace_chart(session,driver):
         averages.append(entry['average'])
         fastests.append(entry['fastest'])
         slowests.append(entry['slowest'])
-    fig = go.Figure()
 
-    fig.add_trace(go.Bar(x=compounds,y=averages,name='Average',marker_color=COLORS['cyan']))
-    fig.add_trace(go.Bar(x=compounds,y=fastests,name='Fastest',marker_color=COLORS['green']))
-    fig.add_trace(go.Bar(x=compounds,y=slowests,name='Slowest',marker_color=COLORS['red']))
+
+    tyre_colors = {
+        'SOFT': COLORS['soft'],
+        'MEDIUM': COLORS['medium'],
+        'HARD': COLORS['hard'],
+        'INTERMEDIATE': COLORS['inter'],
+        'WET': COLORS['wet']}
+
+    colors = [tyre_colors.get(c,COLORS['text_secondary']) for c in compounds]
+    fig = go.Figure()
+    
+
+    fig.add_trace(go.Bar(x=compounds,y=averages,name='Average',marker_color=colors))
+    fig.add_trace(go.Bar(x=compounds,y=fastests,name='Fastest',marker_color=colors, opacity=0.7))
+    fig.add_trace(go.Bar(x=compounds,y=slowests,name='Slowest',marker_color=colors,opactiy=0.4))
 
     fig.update_xaxes(title_text='Compound')
     fig.update_yaxes(title_text='Lap Time')
+    fig.update_layout(barmode='group')
     return applytheme(fig, f'{driver} Pace by Compound')
 
 
