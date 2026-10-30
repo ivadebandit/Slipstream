@@ -115,6 +115,19 @@ if 'session' in st.session_state:
                             width="stretch")
                     else:
                         st.write("Choose exactly 2 drivers")
+
+
+            with tab3:
+                st.plotly_chart(
+                    charts.fastestoverall_chart(session),
+                    width="stretch")
+                st.plotly_chart(
+                    charts.trackevo_chart(session),
+                    width="stretch")
+                for driver in selected:
+                    st.plotly_chart(
+                        charts.consistency_chart(session,driver),
+                        width="stretch")
                 
 
             
