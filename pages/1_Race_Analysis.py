@@ -15,7 +15,7 @@ with st.sidebar:
     year =st.number_input("Year", min_value=2018,max_value=2026,value=2026)
     race=st.text_input("Race", value="Interlagos")
     sessiontype = st.selectbox("Session Type", ["Q","R"])
-    load= st.button("Load Session", use_container_width=True)
+    load= st.button("Load Session", width="stretch")
 if load:
 
     try:
@@ -56,45 +56,41 @@ if 'session' in st.session_state:
                 if sessiontype =="R":
                     for driver in selected:
                         st.subheader(driver)
+
+                        st.plotly_chart(charts.racepace_chart(session,driver), width="stretch")
                         col1, col2 = st.columns(2)
 
                         with col1:
                             st.plotly_chart(
-                                charts.racepace_chart(session,driver),
-                                use_container_width=True)
-                            st.plotly_chart(
                                 charts.tiredeg_chart(session,driver),
-                                use_container_width=True)
-                            st.plotly_chart(
-                                charts.stintsum_chart(session,driver),
-                                use_container_width=True)
+                                width="stretch")
                         with  col2:
                             st.plotly_chart(
                                 charts.compoundpace_chart(session,driver),
-                                use_container_width=True)
-                            st.plotly_chart(
-                                charts.compoundusage_chart(session,driver),
-                                use_container_width=True)
-                            st.plotly_chart(
-                                charts.fueleffect_chart(session,driver),
-                                use_container_width=True)
+                                width="stretch")
+                        st.plotly_chart(
+                            charts.compoundusage_chart(session,driver),
+                            width="stretch")
+                        st.plotly_chart(
+                            charts.fueleffect_chart(session,driver),
+                            width="stretch")
+                        st.plotly_chart(
+                            charts.stintsum_chart(session,driver),
+                            width="stretch")
                 else:
                     for driver in selected:
-                        st.subheader(driver)
-                        col1,col2 =st.columns(2)
-
-                        with col1:
-                            st.plotly_chart(
-                                charts.qualiprog_chart(session,driver),
-                                use_container_width=True)
-                        with col2:
-                            st.plotly_chart(
-                                charts.perfectlap_chart(session,driver),
-                                use_container_width=True)
+                            
+                        st.plotly_chart(
+                            charts.qualiprog_chart(session,driver),
+                            width="stretch")
+                        st.plotly_chart(
+                            charts.perfectlap_chart(session,driver),
+                            width="stretch")
             with tab2:
-                st.write("")
+                st.write("hellllo")
             with tab3: 
-                st.write("")
+                st.write("test")
+                st.write
 
             
             
