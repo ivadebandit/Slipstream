@@ -13,7 +13,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 pg = st.navigation([
-    st.Page("pages/1_Race_Analysis.py", title="Race Analysis", default=True),
-    st.Page("pages/2_Standings.py", title="Standings")
-])
+    st.Page("pages/1_Race_Pace.py", title="Pace & Tires", default=True),
+    st.Page("pages/Race_Strategy.py", title="Strategy")])
 pg.run()
