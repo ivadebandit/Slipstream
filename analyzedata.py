@@ -1,4 +1,5 @@
 from getdata import get_session
+import streamlit as st
 
 def clean_laps(session, driver):
     laps = session.laps
@@ -172,7 +173,7 @@ def fastest_all_time(location, years):
 
 
 
-
+@st.cache_data
 def driverstandings(year, races):
     results = {}
     for race in races:
@@ -198,7 +199,7 @@ def driverstandings(year, races):
             pass
     return results
 
-
+@st.cache_data
 def standingssprint(year,races):
     results={}
 
@@ -219,7 +220,7 @@ def standingssprint(year,races):
     return results
 
 
-
+@st.cache_data
 def totalpoints(year, races):
 
     racepoints = driverstandings(year, races)
@@ -235,7 +236,7 @@ def totalpoints(year, races):
 
 
 
-
+@st.cache_data
 def teamstandings(year, races):
 
     results = {}
@@ -267,7 +268,7 @@ def teamstandings(year, races):
 
 
 
-
+@st.cache_data
 def teamsprints(year, races):
     results = {}
     for race in races:
@@ -285,7 +286,7 @@ def teamsprints(year, races):
     return results
 
 
-
+@st.cache_data
 def totalteams(year,races):
     racepts = teamstandings(year,races)
     sprintpts = teamsprints(year,races)
@@ -587,7 +588,7 @@ def wetdrycomp(sessions, drivers):
 
 
 
-
+@st.cache_data
 def championship_battle(year, races):
     total = {}
 

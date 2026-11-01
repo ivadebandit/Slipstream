@@ -51,11 +51,22 @@ def applytheme(fig, title):
     return fig
 
 
+
+
+
+
+
 def getcolor(session, driver_code):
     try:
         return fastf1.plotting.get_driver_color(driver_code, session)
     except:
-        return COLORS['text_secondary']
+        try:
+            team_name=session.results[session.results['Abbreviation']==driver_code].iloc[0]['TeamName']
+            return teamcolor(session, team_name)
+        except:
+            return COLORS['text_secondary']
+
+
 
 def teamcolor(session, team_name):
     try:
