@@ -14,5 +14,6 @@ st.markdown("""
 
 pg = st.navigation([
     st.Page("pages/1_Race_Pace.py", title="Pace & Tires", default=True),
-    st.Page("pages/Race_Strategy.py", title="Strategy")])
+    st.Page("pages/Race_Strategy.py", title="Strategy"),
+    st.Page("pages/sessiondata.py", title="Sesssion Data") ])
 pg.run()
