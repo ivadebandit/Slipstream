@@ -498,7 +498,7 @@ def drs_zones(session,driver):
         'telemetry': telemetry }
 
 
-
+@st.cache_data
 def h2h(driver1, driver2, races, years):
     results = {}
     for race in races:
@@ -629,7 +629,7 @@ def championship_battle(year, races):
 
 
 
-
+@st.cache_data
 def teammategap_quali(driver1,driver2,races, years):
 
     results = []
@@ -1075,7 +1075,7 @@ def overcuteffect(session, driver1, driver2):
         'race_laps': race_laps}"""
 
 
-
+@st.cache_data
 def wins_count(years, races, driver):
 
     wins = 0
@@ -1095,7 +1095,7 @@ def wins_count(years, races, driver):
 
 
 
-
+@st.cache_data
 def podium_count(years,races, driver):
 
     podiums  = 0
@@ -1113,7 +1113,7 @@ def podium_count(years,races, driver):
 
 
 
-
+@st.cache_data
 def pole_count(years, races,driver):
     poles = 0
     for year in years:
