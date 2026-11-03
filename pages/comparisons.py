@@ -39,6 +39,8 @@ if 'comp_session' in st.session_state:
     if d1 == d2:
         st.write("Select two different drivers")
     else:
+        if year not in years:
+            st.warning("The base session year should be the same as the year in chosen comparison years")
         st.caption(f"Comparing {d1} and {d2}")
 
 
