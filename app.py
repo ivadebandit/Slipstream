@@ -16,8 +16,11 @@ pg = st.navigation([
     st.Page("pages/1_Race_Pace.py", title="Pace & Tires", default=True),
     st.Page("pages/Race_Strategy.py", title="Strategy"),
     st.Page("pages/sessiondata.py", title="Sesssion Data"),
-    st.Page("pages/standings.py", title="Standings"),
-    st.Page("pages/qualifying.py", title="Qualifying and Telemetry"),
-    st.Page("pages/comparisons.py", title="Driver Comparisons"),
-    st.Page("pages/history.py", title="Historical Track Data")])
+   # st.Page("pages/standings.py", title="Standings"),
+    st.Page("pages/qualifying.py", title="Qualifying and Telemetry")])
+   # st.Page("pages/comparisons.py", title="Driver Comparisons"),
+    #st.Page("pages/history.py", title="Historical Track Data")])
 pg.run()
+
+# removed those 3 pages for now because of api call limits but i will 
+# fix that for the next ship 
