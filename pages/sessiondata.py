@@ -1,6 +1,7 @@
 import streamlit as st
 from getdata import get_session
 import charts
+import getdata
 
 
 st.set_page_config(page_title="Slipstream", layout="wide")
@@ -8,7 +9,8 @@ st.header("Session Data")
 with st.sidebar:
     st.subheader("Session")
     year=st.number_input("Year", min_value=2018,max_value=2026,value=2026)
-    race=st.text_input("Race", value="Interlagos")
+    available=getdata.races(year)
+    race=st.selectbox("Race", available)
     sessiontype=st.selectbox("Session Type", ["Q","R"])
     load=st.button("Load Session", width="stretch")
 if load:

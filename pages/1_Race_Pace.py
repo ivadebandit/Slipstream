@@ -1,6 +1,7 @@
 import streamlit as st
 from getdata import get_session
 import charts
+import getdata
 # racepace, deg, compoundpace, stintsum, compoundusage, fueleffect
 # qualiprog, perfectlap,position progresss, pos gained, start,
 #box, under/overcut
@@ -13,14 +14,15 @@ st.header("Race Pace and Tires")
 with st.sidebar:
     st.subheader("Session")
     year =st.number_input("Year", min_value=2018,max_value=2026,value=2026)
-    race=st.text_input("Race", value="Interlagos")
+    available=getdata.races(year)
+    race=st.selectbox("Race", available)
     sessiontype = st.selectbox("Session Type", ["Q","R"])
     load= st.button("Load Session", width="stretch")
 if load:
 
     try:
         with st.spinner("Loading race data"):
-            session= get_session(year,race, sessiontype)
+            session=get_session(year,race, sessiontype)
 
         st.session_state['session']=session
         st.session_state['year']= year
