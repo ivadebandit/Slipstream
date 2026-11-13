@@ -1,7 +1,5 @@
-import fastf1
-fastf1.Cache.enable_cache('cache')
+import tif1
 
 def get_session(year, gp, identifier):
-    session = fastf1.get_session(year, gp, identifier)
-    session.load()
+    session = tif1.get_session(year, gp, identifier)
     return session

@@ -1,4 +1,8 @@
+import numpy as np
+if not hasattr(np, 'NaN'):
+    np.NaN = np.nan
 import streamlit as st
+    
 st.set_page_config(page_title="Slipstream", layout="wide")
 st.markdown("""
     <style>
