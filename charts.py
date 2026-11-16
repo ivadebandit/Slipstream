@@ -766,6 +766,12 @@ def undercuteffect_chart(session, d1,d2):
     from analyzedata import undercuteffect
     data=undercuteffect(session, d1, d2)
 
+    if not data:
+        fig=go.Figure()
+        fig.add_annotation(text=f"No undercut attempts between {d1} and {d2}",
+                           showarrow=False,font=dict(size=16))
+        return applytheme(fig, f'{d1} undercut vs {d2}')
+
     box = data[0]
     checkpoints=['before', 'after_d1_pit','after_d2_pit']
     d1_positions =[
@@ -800,7 +806,11 @@ def overcuteffect_chart(session, d1,d2):
 
     from analyzedata import overcuteffect
     data=overcuteffect(session, d1,d2)
-
+    if not data:
+        fig=go.Figure()
+        fig.add_annotation(text=f"No overcut attempts found between {d1} and {d2}",
+                           showarrow=False, font=dict(size=16))
+        return applytheme(fig, f'{d1} Overcut vs {d2}')
     box = data[0]
     checkpoints =['before', 'afterd2pit', 'afterd1pit']
     d1_pos =[

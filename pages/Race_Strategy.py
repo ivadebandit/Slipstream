@@ -11,7 +11,8 @@ with st.sidebar:
     year=st.number_input("Year", min_value=2018,max_value=2026,value=2026)
     available=getdata.races(year)
     race=st.selectbox("Race", available)
-    sessiontype=st.selectbox("Session Type", ["Q","R"])
+    sessiontype="R"
+    st.info("Session Type must be Race for Strategy page")
     load=st.button("Load Session", width="stretch")
 
 if load:
