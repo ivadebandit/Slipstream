@@ -759,16 +759,17 @@ def lap1start(session):
 
     for _, rows in lap1.iterrows():
         driver = rows['Driver']
+
+        if pd.isna(rows['Position']):
+            continue
         lap1_pos = int(rows['Position'])
 
         driver_res = results[results['Abbreviation'] == driver]
         if not driver_res.empty:
-            grid = int(driver_res.iloc[0]['GridPosition'])
-
+            if pd.isna(driver_res.iloc[0]['GridPosition']):
+                continue
+            grid=int(driver_res.iloc[0]['GridPosition'])
             diff = grid - lap1_pos
-
-            
-
             output.append({
                 'driver':driver,
                 'grid': grid,
