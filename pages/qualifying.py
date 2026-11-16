@@ -9,7 +9,7 @@ st.header("Qualifying and Telemetry")
 
 with st.sidebar:
     st.subheader("Session")
-    year=st.number_input("Year", min_value=2018, max_value=2026, value=2026)
+    year=st.number_input("Year", min_value=2020, max_value=2026, value=2026)
     available=getdata.races(year)
     race=st.selectbox("Race",available)
     sessiontype=st.selectbox("Session Type", ["Q"])
